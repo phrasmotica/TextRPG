@@ -17,6 +17,8 @@ namespace TextRPG
 
         private BasicInventory _inventory;
 
+        public List<Sprite> ItemSprites;
+
         public event Action<BasicInventory> OnInventoryUpdate;
 
         private void Awake()
@@ -73,9 +75,15 @@ namespace TextRPG
             return items;
         }
 
-        public IItem[] RemoveHalf(int slot) => Remove(_inventory.GetCount(slot) / 2, slot);
+        public IItem[] RemoveHalf(int slot) => Remove(_inventory.GetCount(slot) / 2 + 1, slot);
 
         public IItem[] RemoveAll(int slot) => Remove(_inventory.GetCount(slot), slot);
+
+        public Sprite GetSprite(IItem item)
+        {
+            var spriteIndex = item.Id - 1;
+            return ItemSprites[spriteIndex];
+        }
 
         private static IItem CreateItem(int id) => id switch
         {
