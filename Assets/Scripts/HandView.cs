@@ -50,6 +50,8 @@ namespace TextRPG
 
         public void PutBackAll(int slot)
         {
+            // TODO: if this overflows the item's max stack size, it puts all of them
+            // in anyway. Ensure that overflow items are left in the hand
             var (count, remaining) = Inventory.AddOrSwap(_heldItems.ToArray(), slot);
 
             _heldItems = remaining.ToList();
