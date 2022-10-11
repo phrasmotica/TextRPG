@@ -75,7 +75,12 @@ namespace TextRPG
             return items;
         }
 
-        public IItem[] RemoveHalf(int slot) => Remove(_inventory.GetCount(slot) / 2 + 1, slot);
+        public IItem[] RemoveHalf(int slot)
+        {
+            var count = _inventory.GetCount(slot);
+            var removeCount = count % 2 == 0 ? count / 2 : count / 2 + 1;
+            return Remove(removeCount, slot);
+        }
 
         public IItem[] RemoveAll(int slot) => Remove(_inventory.GetCount(slot), slot);
 
