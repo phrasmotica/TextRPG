@@ -53,6 +53,17 @@ namespace TextRPG
 
         public IItem Peek(int slot) => _inventory.Peek(slot);
 
+        public (int, IItem[]) Add(IItem[] items, int slot)
+        {
+            var (count, remaining) = _inventory.Add(items, slot);
+            if (count > 0)
+            {
+                OnInventoryUpdate?.Invoke(_inventory);
+            }
+
+            return (count, remaining);
+        }
+
         public (int, IItem[]) AddOrSwap(IItem[] items, int slot)
         {
             var (count, remaining) = _inventory.AddOrSwap(items, slot);

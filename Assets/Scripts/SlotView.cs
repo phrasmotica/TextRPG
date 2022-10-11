@@ -52,7 +52,7 @@ namespace TextRPG
                     {
                         HandView.PickUpHalf(SlotIndex);
                     }
-                    else if (slotItem is null || HandView.Peek().CanStack(slotItem))
+                    else if (slotItem is null || HandView.Peek().Id == slotItem.Id)
                     {
                         // put back one item if hand is not empty and stacking is possible
                         HandView.PutBackOne(SlotIndex);

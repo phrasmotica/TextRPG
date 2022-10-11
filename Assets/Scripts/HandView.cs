@@ -50,8 +50,6 @@ namespace TextRPG
 
         public void PutBackAll(int slot)
         {
-            // TODO: if this overflows the item's max stack size, it puts all of them
-            // in anyway. Ensure that overflow items are left in the hand
             var (count, remaining) = Inventory.AddOrSwap(_heldItems.ToArray(), slot);
 
             _heldItems = remaining.ToList();
@@ -72,16 +70,13 @@ namespace TextRPG
 
         public void PutBackOne(int slot)
         {
-            // TODO: if slot is full, "remaining" will contain the former slot contents.
-            // Ensure "_heldItems" is assigned properly to account for this
-            var (count, remaining) = Inventory.AddOrSwap(_heldItems.Take(1).ToArray(), slot);
+            var (count, remaining) = Inventory.Add(_heldItems.Take(1).ToArray(), slot);
             if (count > 0)
             {
-                _heldItems = _heldItems.Skip(count).ToList();
+                _heldItems = _heldItems.Skip(count).Concat(remaining).ToList();
             }
 
-            // TODO: pass "_heldItems" rather than "remaining" once above is fixed
-            OnPutBackItems?.Invoke(count, remaining);
+            OnPutBackItems?.Invoke(count, _heldItems.ToArray());
         }
 
         private static void FollowMouse(Transform t)
