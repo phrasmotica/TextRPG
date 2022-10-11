@@ -81,6 +81,7 @@ namespace TextRPG
 
             ItemAmountText.enabled = count > 1;
             ItemAmountText.text = $"x{count}";
+            ItemAmountText.color = inventory.IsFull(SlotIndex) ? Color.red : Color.black;
         }
     }
 }
