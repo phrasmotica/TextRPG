@@ -97,6 +97,20 @@ namespace TextRPG
 
         public IItem[] RemoveAll(int slot) => Remove(_inventory.GetCount(slot), slot);
 
+        public void Clear()
+        {
+            _inventory.Clear();
+
+            OnInventoryUpdate?.Invoke(_inventory);
+        }
+
+        public void Sort()
+        {
+            _inventory.Sort();
+
+            OnInventoryUpdate?.Invoke(_inventory);
+        }
+
         public Sprite GetSprite(IItem item)
         {
             var spriteIndex = item.Id - 1;
