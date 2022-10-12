@@ -759,6 +759,7 @@ GameObject:
   m_Component:
   - component: {fileID: 287227930}
   - component: {fileID: 287227932}
+  - component: {fileID: 287227933}
   - component: {fileID: 287227931}
   m_Layer: 5
   m_Name: p_Slot (2)
@@ -832,6 +833,21 @@ MonoBehaviour:
   SlotSprite: {fileID: 2042254569}
   ItemPreview: {fileID: 969413376}
   ItemAmountText: {fileID: 1155585228}
+--- !u!114 &287227933
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 287227929}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d46e0757dfddbca449db46f75cbd0298, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SpriteRenderer: {fileID: 2042254569}
+  MouseEnterSprite: {fileID: 21300000, guid: 9573131ce9ca05b4090f09d200eafd53, type: 3}
+  MouseExitSprite: {fileID: 21300000, guid: eb4141b7bbc0e91449cff25f5c4954cd, type: 3}
 --- !u!1 &298331280
 GameObject:
   m_ObjectHideFlags: 0
@@ -1140,6 +1156,7 @@ GameObject:
   m_Component:
   - component: {fileID: 577480145}
   - component: {fileID: 577480146}
+  - component: {fileID: 577480148}
   - component: {fileID: 577480147}
   m_Layer: 5
   m_Name: p_Slot
@@ -1213,6 +1230,21 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 64, y: 64}
   m_EdgeRadius: 0
+--- !u!114 &577480148
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 577480144}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d46e0757dfddbca449db46f75cbd0298, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SpriteRenderer: {fileID: 1953407036}
+  MouseEnterSprite: {fileID: 21300000, guid: 9573131ce9ca05b4090f09d200eafd53, type: 3}
+  MouseExitSprite: {fileID: 21300000, guid: eb4141b7bbc0e91449cff25f5c4954cd, type: 3}
 --- !u!1 &606182390
 GameObject:
   m_ObjectHideFlags: 0
@@ -1223,6 +1255,7 @@ GameObject:
   m_Component:
   - component: {fileID: 606182391}
   - component: {fileID: 606182393}
+  - component: {fileID: 606182394}
   - component: {fileID: 606182392}
   m_Layer: 5
   m_Name: p_Slot (3)
@@ -1296,6 +1329,21 @@ MonoBehaviour:
   SlotSprite: {fileID: 195743130}
   ItemPreview: {fileID: 1032326051}
   ItemAmountText: {fileID: 438630516}
+--- !u!114 &606182394
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 606182390}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d46e0757dfddbca449db46f75cbd0298, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SpriteRenderer: {fileID: 195743130}
+  MouseEnterSprite: {fileID: 21300000, guid: 9573131ce9ca05b4090f09d200eafd53, type: 3}
+  MouseExitSprite: {fileID: 21300000, guid: eb4141b7bbc0e91449cff25f5c4954cd, type: 3}
 --- !u!1 &627849440
 GameObject:
   m_ObjectHideFlags: 0
@@ -2150,6 +2198,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1217017681}
   - component: {fileID: 1217017683}
+  - component: {fileID: 1217017684}
   - component: {fileID: 1217017682}
   m_Layer: 5
   m_Name: p_Slot (4)
@@ -2223,6 +2272,21 @@ MonoBehaviour:
   SlotSprite: {fileID: 1839581403}
   ItemPreview: {fileID: 60064768}
   ItemAmountText: {fileID: 88247222}
+--- !u!114 &1217017684
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1217017680}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d46e0757dfddbca449db46f75cbd0298, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SpriteRenderer: {fileID: 1839581403}
+  MouseEnterSprite: {fileID: 21300000, guid: 9573131ce9ca05b4090f09d200eafd53, type: 3}
+  MouseExitSprite: {fileID: 21300000, guid: eb4141b7bbc0e91449cff25f5c4954cd, type: 3}
 --- !u!1 &1225172287
 GameObject:
   m_ObjectHideFlags: 0
@@ -2537,6 +2601,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1727257241}
   - component: {fileID: 1727257243}
+  - component: {fileID: 1727257244}
   - component: {fileID: 1727257242}
   m_Layer: 5
   m_Name: p_Slot (1)
@@ -2610,6 +2675,21 @@ MonoBehaviour:
   SlotSprite: {fileID: 984134579}
   ItemPreview: {fileID: 17484971}
   ItemAmountText: {fileID: 2016175788}
+--- !u!114 &1727257244
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1727257240}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d46e0757dfddbca449db46f75cbd0298, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SpriteRenderer: {fileID: 984134579}
+  MouseEnterSprite: {fileID: 21300000, guid: 9573131ce9ca05b4090f09d200eafd53, type: 3}
+  MouseExitSprite: {fileID: 21300000, guid: eb4141b7bbc0e91449cff25f5c4954cd, type: 3}
 --- !u!1 &1754081490
 GameObject:
   m_ObjectHideFlags: 0
