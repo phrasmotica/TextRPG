@@ -74,7 +74,7 @@ namespace TextRPG
 
         private void Update()
         {
-            FollowMouse(HandItemPreview.transform);
+            FollowMouse(transform);
         }
 
         public IItem Peek() => HasItems ? _heldItems[0] : null;
