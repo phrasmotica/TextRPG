@@ -656,7 +656,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Inventory: {fileID: 1893675197}
   SlotIndex: 2
-  HandView: {fileID: 970121015}
+  SlotSprite: {fileID: 2042254569}
   ItemPreview: {fileID: 969413376}
   ItemAmountText: {fileID: 1155585228}
 --- !u!1 &438630514
@@ -877,7 +877,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Inventory: {fileID: 1893675197}
   SlotIndex: 0
-  HandView: {fileID: 970121015}
+  SlotSprite: {fileID: 1953407036}
   ItemPreview: {fileID: 1059280314}
   ItemAmountText: {fileID: 1258499436}
 --- !u!61 &577480147
@@ -986,7 +986,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Inventory: {fileID: 1893675197}
   SlotIndex: 3
-  HandView: {fileID: 970121015}
+  SlotSprite: {fileID: 195743130}
   ItemPreview: {fileID: 1032326051}
   ItemAmountText: {fileID: 438630516}
 --- !u!1 &627849440
@@ -1777,7 +1777,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Inventory: {fileID: 1893675197}
   SlotIndex: 4
-  HandView: {fileID: 970121015}
+  SlotSprite: {fileID: 1839581403}
   ItemPreview: {fileID: 60064768}
   ItemAmountText: {fileID: 88247222}
 --- !u!1 &1258499434
@@ -2030,7 +2030,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Inventory: {fileID: 1893675197}
   SlotIndex: 1
-  HandView: {fileID: 970121015}
+  SlotSprite: {fileID: 984134579}
   ItemPreview: {fileID: 17484971}
   ItemAmountText: {fileID: 2016175788}
 --- !u!1 &1754081490
@@ -2275,6 +2275,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08754ccd0ebcc734d8a8a22dd699175a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Size: 5
   ItemSprites:
   - {fileID: 21300000, guid: ff7bdce0d21156848ba7eb3a62548487, type: 3}
   - {fileID: 21300000, guid: 654be08460bcd8044aeb166586a8e3a1, type: 3}

@@ -1,6 +1,9 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 using VideoGameExperiments.Inventory;
+using VideoGameExperiments.Items;
+using Color = UnityEngine.Color;
 
 namespace TextRPG
 {
@@ -12,18 +15,35 @@ namespace TextRPG
 
         public int SlotIndex;
 
-        public HandView HandView;
+        public SpriteRenderer SlotSprite;
 
         public SpriteRenderer ItemPreview;
 
         public Text ItemAmountText;
 
+        public event Action<int> OnLeftClick;
+
+        public event Action<int> OnRightClick;
+
         private void OnMouseEnter() => _mouseIsOver = true;
+
         private void OnMouseExit() => _mouseIsOver = false;
 
         private void Awake()
         {
-            Inventory.OnInventoryUpdate += Inventory_OnInventoryUpdate;
+            enabled = SlotIndex < Inventory.Size;
+
+            if (enabled)
+            {
+                ShowEnabled();
+
+                Inventory.OnInventoryUpdate += Inventory_OnInventoryUpdate;
+            }
+            else
+            {
+                ShowDisabled();
+                HideItem();
+            }
         }
 
         private void Update()
@@ -33,34 +53,13 @@ namespace TextRPG
                 // left click
                 if (Input.GetMouseButtonUp(0))
                 {
-                    if (HandView.HasItems)
-                    {
-                        HandView.PutBackAll(SlotIndex);
-                    }
-                    else
-                    {
-                        HandView.PickUpAll(SlotIndex);
-                    }
+                    OnLeftClick?.Invoke(SlotIndex);
                 }
 
                 // right click
                 if (Input.GetMouseButtonUp(1))
                 {
-                    var slotItem = Inventory.Peek(SlotIndex);
-
-                    if (!HandView.HasItems)
-                    {
-                        HandView.PickUpHalf(SlotIndex);
-                    }
-                    else if (slotItem is null || HandView.Peek().Id == slotItem.Id)
-                    {
-                        // put back one item if hand is not empty and stacking is possible
-                        HandView.PutBackOne(SlotIndex);
-                    }
-                    else
-                    {
-                        Debug.Log($"Cannot put back {HandView.Peek().Name}, slot contains {slotItem.Name}(s)");
-                    }
+                    OnRightClick?.Invoke(SlotIndex);
                 }
             }
         }
@@ -70,18 +69,40 @@ namespace TextRPG
             var count = inventory.GetCount(SlotIndex);
             if (count > 0)
             {
-                ItemPreview.enabled = true;
-                ItemPreview.sprite = Inventory.GetSprite(inventory.Peek(SlotIndex));
+                ShowItem(inventory.Peek(SlotIndex));
             }
             else
             {
-                ItemPreview.enabled = false;
-                ItemPreview.sprite = null;
+                HideItem();
             }
 
             ItemAmountText.enabled = count > 1;
             ItemAmountText.text = $"x{count}";
             ItemAmountText.color = inventory.IsFull(SlotIndex) ? Color.red : Color.black;
+        }
+
+        private void ShowEnabled()
+        {
+            SlotSprite.color = Color.white;
+        }
+
+        private void ShowDisabled()
+        {
+            SlotSprite.color = Color.gray;
+        }
+
+        private void ShowItem(IItem item)
+        {
+            ItemPreview.enabled = true;
+            ItemPreview.sprite = Inventory.GetSprite(item);
+        }
+
+        private void HideItem()
+        {
+            ItemPreview.enabled = false;
+            ItemPreview.sprite = null;
+
+            ItemAmountText.enabled = false;
         }
     }
 }

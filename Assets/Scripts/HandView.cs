@@ -30,8 +30,46 @@ namespace TextRPG
             OnPickupItems += InventoryView_OnPickupItems;
             OnPutBackItems += InventoryView_OnPutBackItems;
 
+            var slots = Inventory.GetSlots();
+
+            foreach (var slot in slots.Where(s => s.SlotIndex < slots.Length))
+            {
+                slot.OnLeftClick += Slot_OnLeftClick;
+                slot.OnRightClick += Slot_OnRightClick;
+            }
+
             // ensure hand view shows as empty
             OnPickupItems(0);
+        }
+
+        private void Slot_OnLeftClick(int slotIndex)
+        {
+            if (HasItems)
+            {
+                PutBackAll(slotIndex);
+            }
+            else
+            {
+                PickUpAll(slotIndex);
+            }
+        }
+
+        private void Slot_OnRightClick(int slotIndex)
+        {
+            var slotItem = Inventory.Peek(slotIndex);
+
+            if (!HasItems)
+            {
+                PickUpHalf(slotIndex);
+            }
+            else if (slotItem is null || Peek().Id == slotItem.Id)
+            {
+                PutBackOne(slotIndex);
+            }
+            else
+            {
+                Debug.Log($"Cannot put back {Peek().Name}, slot contains {slotItem.Name}(s)");
+            }
         }
 
         private void Update()

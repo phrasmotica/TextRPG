@@ -17,13 +17,15 @@ namespace TextRPG
 
         private BasicInventory _inventory;
 
+        public int Size;
+
         public List<Sprite> ItemSprites;
 
         public event Action<BasicInventory> OnInventoryUpdate;
 
         private void Awake()
         {
-            _inventory = new BasicInventory(5);
+            _inventory = new BasicInventory(Size);
 
             OnInventoryUpdate?.Invoke(_inventory);
         }
@@ -100,6 +102,8 @@ namespace TextRPG
             var spriteIndex = item.Id - 1;
             return ItemSprites[spriteIndex];
         }
+
+        public SlotView[] GetSlots() => GetComponentsInChildren<SlotView>();
 
         private static IItem CreateItem(int id) => id switch
         {
