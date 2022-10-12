@@ -699,7 +699,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 80}
-  m_SizeDelta: {x: 350, y: 50}
+  m_SizeDelta: {x: 550, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &210838491
 MonoBehaviour:
@@ -734,13 +734,13 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Press 1 to add potion, 2 to add coin, 3 to add sword
+  m_Text: 'Press 1 to add potion, 2 to add coin, 3 to add sword (hold Left Shift
+    to add a full stack)
 
-    Left click to
-    pick up/put back all held items
+    Left click to pick up/put back all held items
 
-    Right click to pick up half or put back
-    one item'
+    Right
+    click to pick up half or put back one item'
 --- !u!222 &210838492
 CanvasRenderer:
   m_ObjectHideFlags: 0

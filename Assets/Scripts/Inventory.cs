@@ -32,25 +32,7 @@ namespace TextRPG
 
         private void Update()
         {
-            var didChange = false;
-
-            foreach (var (keyCode, id) in _itemMap)
-            {
-                if (Input.GetKeyUp(keyCode))
-                {
-                    var (count, remaining) = _inventory.Collect(new IItem[]
-                    {
-                        CreateItem(id),
-                    });
-
-                    didChange |= count > 0;
-                }
-            }
-
-            if (didChange)
-            {
-                OnInventoryUpdate?.Invoke(_inventory);
-            }
+            CollectNewItems();
         }
 
         public IItem Peek(int slot) => _inventory.Peek(slot);
@@ -118,6 +100,41 @@ namespace TextRPG
         }
 
         public SlotView[] GetSlots() => GetComponentsInChildren<SlotView>();
+
+        private void CollectNewItems()
+        {
+            var didChange = false;
+
+            foreach (var (keyCode, id) in _itemMap)
+            {
+                if (Input.GetKeyUp(keyCode))
+                {
+                    var item = CreateItem(id);
+
+                    var newItems = new List<IItem>
+                    {
+                        item,
+                    };
+
+                    // hold shift to add an entire stack
+                    var additionalCount = Input.GetKey(KeyCode.LeftShift) ? item.MaxStackSize - 1 : 0;
+
+                    for (var i = 0; i < additionalCount; i++)
+                    {
+                        newItems.Add(CreateItem(id));
+                    }
+
+                    var (count, remaining) = _inventory.Collect(newItems.ToArray());
+
+                    didChange |= count > 0;
+                }
+            }
+
+            if (didChange)
+            {
+                OnInventoryUpdate?.Invoke(_inventory);
+            }
+        }
 
         private static IItem CreateItem(int id) => id switch
         {
