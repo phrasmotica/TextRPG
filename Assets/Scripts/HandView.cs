@@ -30,13 +30,16 @@ namespace TextRPG
             OnPickupItems += InventoryView_OnPickupItems;
             OnPutBackItems += InventoryView_OnPutBackItems;
 
-            var slots = Inventory.GetSlots();
-
-            foreach (var slot in slots.Where(s => s.SlotIndex < slots.Length))
+            Inventory.OnInventoryUpdate += (_, slots) =>
             {
-                slot.OnLeftClick += Slot_OnLeftClick;
-                slot.OnRightClick += Slot_OnRightClick;
-            }
+                foreach (var slot in slots.Where(s => !s.ClickEventsRegistered))
+                {
+                    slot.OnLeftClick += Slot_OnLeftClick;
+                    slot.OnRightClick += Slot_OnRightClick;
+
+                    slot.ClickEventsRegistered = true;
+                }
+            };
 
             // ensure hand view shows as empty
             OnPickupItems(0);
@@ -144,6 +147,8 @@ namespace TextRPG
             {
                 HandItemPreview.enabled = true;
                 HandItemPreview.sprite = Inventory.GetSprite(_heldItems[0]);
+
+                HandItemAmountText.color = handCount >= _heldItems[0].MaxStackSize ? Color.red : Color.black;
             }
             else
             {

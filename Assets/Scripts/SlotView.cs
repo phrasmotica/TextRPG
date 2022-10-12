@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using VideoGameExperiments.Inventory;
@@ -13,9 +14,11 @@ namespace TextRPG
 
         public Inventory Inventory;
 
+        public HoverSprite HoverSprite;
+
         public int SlotIndex;
 
-        public SpriteRenderer SlotSprite;
+        public SpriteRenderer SlotSpriteRenderer;
 
         public SpriteRenderer ItemPreview;
 
@@ -25,26 +28,11 @@ namespace TextRPG
 
         public event Action<int> OnRightClick;
 
+        public bool ClickEventsRegistered { get; set; }
+
         private void OnMouseEnter() => _mouseIsOver = true;
 
         private void OnMouseExit() => _mouseIsOver = false;
-
-        private void Awake()
-        {
-            enabled = SlotIndex < Inventory.Size;
-
-            if (enabled)
-            {
-                ShowEnabled();
-
-                Inventory.OnInventoryUpdate += Inventory_OnInventoryUpdate;
-            }
-            else
-            {
-                ShowDisabled();
-                HideItem();
-            }
-        }
 
         private void Update()
         {
@@ -64,31 +52,45 @@ namespace TextRPG
             }
         }
 
-        private void Inventory_OnInventoryUpdate(BasicInventory inventory)
+        public void Inventory_OnInventoryUpdate(BasicInventory inventory)
         {
-            var count = inventory.GetCount(SlotIndex);
-            if (count > 0)
+            enabled = SlotIndex < Inventory.Size;
+
+            if (enabled)
             {
-                ShowItem(inventory.Peek(SlotIndex));
+                ShowEnabled();
+
+                var count = inventory.GetCount(SlotIndex);
+                if (count > 0)
+                {
+                    ShowItem(inventory.Peek(SlotIndex));
+                }
+                else
+                {
+                    HideItem();
+                }
+
+                ItemAmountText.enabled = count > 1;
+                ItemAmountText.text = $"x{count}";
+                ItemAmountText.color = inventory.IsFull(SlotIndex) ? Color.red : Color.black;
             }
             else
             {
+                ShowDisabled();
                 HideItem();
             }
-
-            ItemAmountText.enabled = count > 1;
-            ItemAmountText.text = $"x{count}";
-            ItemAmountText.color = inventory.IsFull(SlotIndex) ? Color.red : Color.black;
         }
 
         private void ShowEnabled()
         {
-            SlotSprite.color = Color.white;
+            HoverSprite.enabled = true;
+            SlotSpriteRenderer.color = Color.white;
         }
 
         private void ShowDisabled()
         {
-            SlotSprite.color = Color.gray;
+            HoverSprite.enabled = false;
+            SlotSpriteRenderer.color = new Color(0.2f, 0.2f, 0.2f, 1);
         }
 
         private void ShowItem(IItem item)
