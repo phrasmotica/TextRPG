@@ -34,7 +34,9 @@ namespace TextRPG
 
         public Slider SizeSlider;
 
-        public event Action<BasicInventory, List<SlotView>> OnInventoryUpdate;
+        public event Action<BasicInventory> OnInventoryUpdate;
+
+        public event Action<List<SlotView>> OnSizeChange;
 
         public int Size => _inventory.Size;
 
@@ -45,9 +47,11 @@ namespace TextRPG
 
             SizeSlider.onValueChanged.AddListener(f => Resize((int) f));
 
-            OnInventoryUpdate += (i, _) => DrawSlots(i);
+            OnInventoryUpdate += DrawSlots;
 
-            OnInventoryUpdate(_inventory, _createdSlots);
+            OnInventoryUpdate(_inventory);
+
+            OnSizeChange?.Invoke(_createdSlots);
         }
 
         private void Update()
@@ -62,7 +66,7 @@ namespace TextRPG
             var (count, remaining) = _inventory.Add(items, slot);
             if (count > 0)
             {
-                OnInventoryUpdate(_inventory, _createdSlots);
+                OnInventoryUpdate(_inventory);
             }
 
             return (count, remaining);
@@ -73,7 +77,7 @@ namespace TextRPG
             var (count, remaining) = _inventory.AddOrSwap(items, slot);
             if (count > 0)
             {
-                OnInventoryUpdate(_inventory, _createdSlots);
+                OnInventoryUpdate(_inventory);
             }
 
             return (count, remaining);
@@ -84,7 +88,7 @@ namespace TextRPG
             var items = _inventory.Remove(count, slot);
             if (items.Length > 0)
             {
-                OnInventoryUpdate(_inventory, _createdSlots);
+                OnInventoryUpdate(_inventory);
             }
 
             return items;
@@ -103,14 +107,14 @@ namespace TextRPG
         {
             _inventory.Clear();
 
-            OnInventoryUpdate(_inventory, _createdSlots);
+            OnInventoryUpdate(_inventory);
         }
 
         public void Sort()
         {
             _inventory.Sort();
 
-            OnInventoryUpdate(_inventory, _createdSlots);
+            OnInventoryUpdate(_inventory);
         }
 
         public void Resize(int newSize)
@@ -118,7 +122,8 @@ namespace TextRPG
             var didResize = _inventory.Resize(newSize);
             if (didResize)
             {
-                OnInventoryUpdate(_inventory, _createdSlots);
+                OnInventoryUpdate(_inventory);
+                OnSizeChange(_createdSlots);
             }
         }
 
@@ -159,7 +164,7 @@ namespace TextRPG
 
             if (didChange)
             {
-                OnInventoryUpdate(_inventory, _createdSlots);
+                OnInventoryUpdate(_inventory);
             }
         }
 
@@ -172,7 +177,7 @@ namespace TextRPG
 
                 // enable necessary slots and disable extra slots
                 slot.gameObject.SetActive(active);
-                slot.enabled = i < inventory.Size;
+                slot.enabled = active;
             }
 
             if (_createdSlots.Count < inventory.Size)
@@ -188,7 +193,7 @@ namespace TextRPG
                     slot.Inventory = this;
                     slot.SlotIndex = i;
 
-                    OnInventoryUpdate += (i, _) => slot.Inventory_OnInventoryUpdate(i);
+                    OnInventoryUpdate += slot.Inventory_OnInventoryUpdate;
 
                     slot.Inventory_OnInventoryUpdate(inventory);
 

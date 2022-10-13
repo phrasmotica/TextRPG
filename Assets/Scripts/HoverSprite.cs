@@ -15,8 +15,7 @@ namespace TextRPG
 
         private void OnMouseEnter()
         {
-            // don't do anything if disabled
-            SpriteRenderer.sprite = enabled ? MouseEnterSprite : MouseExitSprite;
+            SpriteRenderer.sprite = MouseEnterSprite;
         }
 
         private void OnMouseExit()

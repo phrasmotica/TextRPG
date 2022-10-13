@@ -30,7 +30,7 @@ namespace TextRPG
             OnPickupItems += InventoryView_OnPickupItems;
             OnPutBackItems += InventoryView_OnPutBackItems;
 
-            Inventory.OnInventoryUpdate += (_, slots) =>
+            Inventory.OnSizeChange += slots =>
             {
                 foreach (var slot in slots.Where(s => !s.ClickEventsRegistered))
                 {

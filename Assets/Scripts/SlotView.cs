@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using VideoGameExperiments.Inventory;
@@ -14,11 +13,7 @@ namespace TextRPG
 
         public Inventory Inventory;
 
-        public HoverSprite HoverSprite;
-
         public int SlotIndex;
-
-        public SpriteRenderer SlotSpriteRenderer;
 
         public SpriteRenderer ItemPreview;
 
@@ -54,12 +49,9 @@ namespace TextRPG
 
         public void Inventory_OnInventoryUpdate(BasicInventory inventory)
         {
-            enabled = SlotIndex < Inventory.Size;
-
-            if (enabled)
+            var active = SlotIndex < inventory.Size;
+            if (active)
             {
-                ShowEnabled();
-
                 var count = inventory.GetCount(SlotIndex);
                 if (count > 0)
                 {
@@ -74,23 +66,6 @@ namespace TextRPG
                 ItemAmountText.text = $"x{count}";
                 ItemAmountText.color = inventory.IsFull(SlotIndex) ? Color.red : Color.black;
             }
-            else
-            {
-                ShowDisabled();
-                HideItem();
-            }
-        }
-
-        private void ShowEnabled()
-        {
-            HoverSprite.enabled = true;
-            SlotSpriteRenderer.color = Color.white;
-        }
-
-        private void ShowDisabled()
-        {
-            HoverSprite.enabled = false;
-            SlotSpriteRenderer.color = new Color(0.2f, 0.2f, 0.2f, 1);
         }
 
         private void ShowItem(IItem item)
