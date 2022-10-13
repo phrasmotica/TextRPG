@@ -11,7 +11,7 @@ namespace TextRPG
     {
         private bool _mouseIsOver;
 
-        public Inventory Inventory;
+        public ItemFactory ItemFactory;
 
         public int SlotIndex;
 
@@ -71,7 +71,7 @@ namespace TextRPG
         private void ShowItem(IItem item)
         {
             ItemPreview.enabled = true;
-            ItemPreview.sprite = Inventory.GetSprite(item);
+            ItemPreview.sprite = ItemFactory.GetSprite(item);
         }
 
         private void HideItem()

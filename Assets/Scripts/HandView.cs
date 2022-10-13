@@ -13,6 +13,8 @@ namespace TextRPG
 
         public Inventory Inventory;
 
+        public ItemFactory ItemFactory;
+
         public SpriteRenderer HandItemPreview;
 
         public Text HandItemAmountText;
@@ -146,7 +148,7 @@ namespace TextRPG
             if (handCount > 0)
             {
                 HandItemPreview.enabled = true;
-                HandItemPreview.sprite = Inventory.GetSprite(_heldItems[0]);
+                HandItemPreview.sprite = ItemFactory.GetSprite(_heldItems[0]);
 
                 HandItemAmountText.color = handCount >= _heldItems[0].MaxStackSize ? Color.red : Color.black;
             }
