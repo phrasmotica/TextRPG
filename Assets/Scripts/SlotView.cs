@@ -19,6 +19,8 @@ namespace TextRPG
 
         public Text ItemAmountText;
 
+        public Text SlotIndexText;
+
         public event Action<int> OnLeftClick;
 
         public event Action<int> OnRightClick;
@@ -28,6 +30,11 @@ namespace TextRPG
         private void OnMouseEnter() => _mouseIsOver = true;
 
         private void OnMouseExit() => _mouseIsOver = false;
+
+        private void Awake()
+        {
+            SlotIndexText.text = $"{SlotIndex}";
+        }
 
         private void Update()
         {
@@ -49,6 +56,8 @@ namespace TextRPG
 
         public void Inventory_OnInventoryUpdate(BasicInventory inventory)
         {
+            SlotIndexText.text = $"{SlotIndex + 1}";
+
             var active = SlotIndex < inventory.Size;
             if (active)
             {

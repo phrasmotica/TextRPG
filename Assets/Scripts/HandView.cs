@@ -97,7 +97,7 @@ namespace TextRPG
 
             _heldItems = remaining.ToList();
 
-            OnPutBackItems?.Invoke(count, remaining);
+            OnPutBackItems(count, remaining);
         }
 
         public void PickUpHalf(int slot)
@@ -119,7 +119,7 @@ namespace TextRPG
                 _heldItems = _heldItems.Skip(count).Concat(remaining).ToList();
             }
 
-            OnPutBackItems?.Invoke(count, _heldItems.ToArray());
+            OnPutBackItems(count, _heldItems.ToArray());
         }
 
         private static void FollowMouse(Transform t)

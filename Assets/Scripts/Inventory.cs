@@ -13,12 +13,6 @@ namespace TextRPG
 
         private List<SlotView> _createdSlots;
 
-        [Range(1, 8)]
-        public int InitialSize;
-
-        [Range(1, 8)]
-        public int Columns;
-
         public ItemFactory ItemFactory;
 
         public GameObject SlotPrefab;
@@ -35,14 +29,15 @@ namespace TextRPG
 
         private void Awake()
         {
-            _inventory = new BasicInventory(InitialSize);
+            _inventory = new BasicInventory((int) SizeSlider.value);
+
             _createdSlots = new List<SlotView>();
 
-            ItemFactory.OnCollect += items => Collect(items);
+            ItemFactory.OnCreate += items => Collect(items);
 
             SizeSlider.onValueChanged.AddListener(f => Resize((int) f));
 
-            OnInventoryUpdate += DrawSlots;
+            OnInventoryUpdate += UpdateSlotViews;
 
             OnInventoryUpdate(_inventory);
 
@@ -128,7 +123,7 @@ namespace TextRPG
             }
         }
 
-        private void DrawSlots(BasicInventory inventory)
+        private void UpdateSlotViews(BasicInventory inventory)
         {
             for (var i = 0; i < _createdSlots.Count; i++)
             {
@@ -140,26 +135,29 @@ namespace TextRPG
                 slot.enabled = active;
             }
 
-            if (_createdSlots.Count < inventory.Size)
+            // create any newly-required slots
+            for (var i = _createdSlots.Count; i < inventory.Size; i++)
             {
-                // create any newly-required slots
-                for (var i = _createdSlots.Count; i < inventory.Size; i++)
-                {
-                    var slot = Instantiate(SlotPrefab, SlotParent).GetComponent<SlotView>();
-
-                    slot.gameObject.name += $"_{i}";
-                    slot.transform.localPosition += new Vector3(75 * (i % Columns), -75 * (i / Columns), 0);
-
-                    slot.ItemFactory = ItemFactory;
-                    slot.SlotIndex = i;
-
-                    OnInventoryUpdate += slot.Inventory_OnInventoryUpdate;
-
-                    slot.Inventory_OnInventoryUpdate(inventory);
-
-                    _createdSlots.Add(slot);
-                }
+                _createdSlots.Add(CreateSlotView(inventory, i));
             }
+        }
+
+        private SlotView CreateSlotView(BasicInventory inventory, int index)
+        {
+            var slot = Instantiate(SlotPrefab, SlotParent).GetComponent<SlotView>();
+
+            slot.gameObject.name += $"_{index}";
+            slot.SlotIndex = index;
+            slot.ItemFactory = ItemFactory;
+
+            var width = index > 0 ? 72 : 64;
+            slot.transform.localPosition += new Vector3(width * index, 0, 0);
+
+            OnInventoryUpdate += slot.Inventory_OnInventoryUpdate;
+
+            slot.Inventory_OnInventoryUpdate(inventory);
+
+            return slot;
         }
     }
 }

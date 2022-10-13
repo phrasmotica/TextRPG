@@ -19,7 +19,7 @@ namespace TextRPG
 
         public List<Sprite> ItemSprites;
 
-        public event Action<IItem[]> OnCollect;
+        public event Action<IItem[]> OnCreate;
 
         private void Update()
         {
@@ -53,7 +53,7 @@ namespace TextRPG
                         newItems.Add(CreateItem(id));
                     }
 
-                    OnCollect?.Invoke(newItems.ToArray());
+                    OnCreate?.Invoke(newItems.ToArray());
                 }
             }
         }
