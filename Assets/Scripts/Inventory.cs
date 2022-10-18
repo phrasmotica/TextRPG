@@ -1,12 +1,12 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using VideoGameExperiments.Inventory;
 using VideoGameExperiments.Items;
 
 namespace TextRPG
 {
+    [ExecuteInEditMode]
     public class Inventory : MonoBehaviour
     {
         private BasicInventory _inventory;
@@ -19,7 +19,8 @@ namespace TextRPG
 
         public Transform SlotParent;
 
-        public Slider SizeSlider;
+        [Range(3, 5)]
+        public int InitialSize;
 
         public event Action<BasicInventory> OnInventoryUpdate;
 
@@ -29,13 +30,16 @@ namespace TextRPG
 
         private void Awake()
         {
-            _inventory = new BasicInventory((int) SizeSlider.value);
+            _inventory = new BasicInventory(InitialSize);
 
             _createdSlots = new List<SlotView>();
 
-            ItemFactory.OnCreate += items => Collect(items);
+            foreach (Transform t in SlotParent)
+            {
+                _createdSlots.Add(t.GetComponent<SlotView>());
+            }
 
-            SizeSlider.onValueChanged.AddListener(f => Resize((int) f));
+            ItemFactory.OnCreate += items => Collect(items);
 
             OnInventoryUpdate += UpdateSlotViews;
 
@@ -138,11 +142,18 @@ namespace TextRPG
             // create any newly-required slots
             for (var i = _createdSlots.Count; i < inventory.Size; i++)
             {
-                _createdSlots.Add(CreateSlotView(inventory, i));
+                _createdSlots.Add(CreateSlotView(i));
+            }
+
+            foreach (var slot in _createdSlots)
+            {
+                OnInventoryUpdate += slot.Inventory_OnInventoryUpdate;
+
+                slot.Inventory_OnInventoryUpdate(inventory);
             }
         }
 
-        private SlotView CreateSlotView(BasicInventory inventory, int index)
+        private SlotView CreateSlotView(int index)
         {
             var slot = Instantiate(SlotPrefab, SlotParent).GetComponent<SlotView>();
 
@@ -150,12 +161,13 @@ namespace TextRPG
             slot.SlotIndex = index;
             slot.ItemFactory = ItemFactory;
 
+            var totalWidth = 64 + 72 * (Size - 1);
+            var startX = 32 - totalWidth / 2;
+
             var width = index > 0 ? 72 : 64;
-            slot.transform.localPosition += new Vector3(width * index, 0, 0);
+            var offsetX = width * index;
 
-            OnInventoryUpdate += slot.Inventory_OnInventoryUpdate;
-
-            slot.Inventory_OnInventoryUpdate(inventory);
+            slot.transform.localPosition += new Vector3(startX + offsetX, 0, 0);
 
             return slot;
         }

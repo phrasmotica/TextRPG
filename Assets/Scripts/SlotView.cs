@@ -33,7 +33,7 @@ namespace TextRPG
 
         private void Awake()
         {
-            SlotIndexText.text = $"{SlotIndex}";
+            SlotIndexText.text = $"{SlotIndex + 1}";
         }
 
         private void Update()

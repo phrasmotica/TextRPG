@@ -10,52 +10,26 @@ namespace TextRPG
     /// </summary>
     public class ItemFactory : MonoBehaviour
     {
-        private readonly Dictionary<KeyCode, int> _itemMap = new()
-        {
-            [KeyCode.Alpha1] = 1,
-            [KeyCode.Alpha2] = 2,
-            [KeyCode.Alpha3] = 3,
-        };
-
         public List<Sprite> ItemSprites;
 
         public event Action<IItem[]> OnCreate;
 
-        private void Update()
+        public void Create(int id)
         {
-            CollectNewItems();
+            var item = CreateItem(id);
+
+            var newItems = new List<IItem>
+            {
+                item,
+            };
+
+            OnCreate?.Invoke(newItems.ToArray());
         }
 
         public Sprite GetSprite(IItem item)
         {
             var spriteIndex = item.Id - 1;
             return ItemSprites[spriteIndex];
-        }
-
-        private void CollectNewItems()
-        {
-            foreach (var (keyCode, id) in _itemMap)
-            {
-                if (Input.GetKeyUp(keyCode))
-                {
-                    var item = CreateItem(id);
-
-                    var newItems = new List<IItem>
-                    {
-                        item,
-                    };
-
-                    // hold shift to add an entire stack
-                    var additionalCount = Input.GetKey(KeyCode.LeftShift) ? item.MaxStackSize - 1 : 0;
-
-                    for (var i = 0; i < additionalCount; i++)
-                    {
-                        newItems.Add(CreateItem(id));
-                    }
-
-                    OnCreate?.Invoke(newItems.ToArray());
-                }
-            }
         }
 
         private static IItem CreateItem(int id) => id switch
