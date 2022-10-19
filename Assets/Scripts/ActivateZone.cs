@@ -28,6 +28,8 @@ namespace TextRPG
             {
                 OnActivate += HandView.Clear;
             }
+
+            // TODO: show "game won" screen on activate
         }
 
         private void OnMouseEnter()
