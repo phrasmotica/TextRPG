@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
+using VideoGameExperiments.Items;
 
 namespace TextRPG
 {
@@ -6,16 +8,41 @@ namespace TextRPG
     {
         private bool _mouseOver;
 
+        private int _currentCount;
+
+        public int ItemId;
+
         [Range(1, 3)]
         public int Count;
 
-        public ItemFactory ItemFactory;
+        public SpriteRenderer SpriteRenderer;
 
-        private int _currentCount;
+        public HandView HandView;
 
-        private void OnMouseEnter() => _mouseOver = true;
+        public event Action OnEnter;
 
-        private void OnMouseExit() => _mouseOver = false;
+        public event Action OnExit;
+
+        public event Action<IItem> OnPickup;
+
+        private void Awake()
+        {
+            OnEnter += ShowHighlight;
+            OnExit += ShowNormal;
+            OnPickup += HandView.Add;
+        }
+
+        private void OnMouseEnter()
+        {
+            _mouseOver = true;
+            OnEnter();
+        }
+
+        private void OnMouseExit()
+        {
+            _mouseOver = false;
+            OnExit();
+        }
 
         private void Update()
         {
@@ -23,7 +50,7 @@ namespace TextRPG
             {
                 if (_currentCount < Count)
                 {
-                    ItemFactory.Create(1);
+                    OnPickup(ItemFactory.CreateItem(ItemId));
 
                     if (++_currentCount >= Count)
                     {
@@ -32,5 +59,8 @@ namespace TextRPG
                 }
             }
         }
+
+        private void ShowNormal() => SpriteRenderer.color = Color.white;
+        private void ShowHighlight() => SpriteRenderer.color = Color.red;
     }
 }

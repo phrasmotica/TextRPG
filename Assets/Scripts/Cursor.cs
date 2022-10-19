@@ -16,6 +16,7 @@ namespace TextRPG
         {
             HandView.OnPickupItems += UpdateHandView;
             HandView.OnPutBackItems += (_, remaining) => UpdateHandView(remaining.Length);
+            HandView.OnClear += () => UpdateHandView(0);
         }
 
         private void UpdateHandView(int handCount)

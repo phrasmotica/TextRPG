@@ -23,6 +23,8 @@ namespace TextRPG
 
         public event Action<int, IItem[]> OnPutBackItems;
 
+        public event Action OnClear;
+
         public bool HasItems => _heldItems.Any();
 
         private void Awake()
@@ -82,6 +84,13 @@ namespace TextRPG
             FollowMouse(transform);
         }
 
+        public void Add(IItem item)
+        {
+            _heldItems.Add(item);
+
+            OnPickupItems(_heldItems.Count);
+        }
+
         public IItem Peek() => HasItems ? _heldItems[0] : null;
 
         public void PickUpAll(int slot)
@@ -120,6 +129,25 @@ namespace TextRPG
             }
 
             OnPutBackItems(count, _heldItems.ToArray());
+        }
+
+        public void Clear()
+        {
+            _heldItems.Clear();
+
+            UpdateHandView();
+
+            OnClear?.Invoke();
+        }
+
+        public void ShowNormal()
+        {
+            HandItemPreview.color = Color.white;
+        }
+
+        public void ShowHighlight()
+        {
+            HandItemPreview.color = Color.red;
         }
 
         private static void FollowMouse(Transform t)

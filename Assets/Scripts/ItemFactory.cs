@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using TextRPG.Items;
 using UnityEngine;
 using VideoGameExperiments.Items;
 
@@ -12,18 +13,16 @@ namespace TextRPG
     {
         public List<Sprite> ItemSprites;
 
-        public event Action<IItem[]> OnCreate;
+        public event Action<IItem[]> OnCollect;
 
-        public void Create(int id)
+        public void Collect(int id)
         {
-            var item = CreateItem(id);
-
             var newItems = new List<IItem>
             {
-                item,
+                CreateItem(id),
             };
 
-            OnCreate?.Invoke(newItems.ToArray());
+            OnCollect?.Invoke(newItems.ToArray());
         }
 
         public Sprite GetSprite(IItem item)
@@ -32,11 +31,12 @@ namespace TextRPG
             return ItemSprites[spriteIndex];
         }
 
-        private static IItem CreateItem(int id) => id switch
+        public static IItem CreateItem(int id) => id switch
         {
             1 => new Potion(),
             2 => new Coin(),
             3 => new Sword(),
+            4 => new Key(),
             _ => throw new NotImplementedException(),
         };
     }

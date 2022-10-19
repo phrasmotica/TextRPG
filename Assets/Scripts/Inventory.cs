@@ -39,7 +39,7 @@ namespace TextRPG
                 _createdSlots.Add(t.GetComponent<SlotView>());
             }
 
-            ItemFactory.OnCreate += items => Collect(items);
+            ItemFactory.OnCollect += items => Collect(items);
 
             OnInventoryUpdate += UpdateSlotViews;
 
