@@ -62,5 +62,11 @@ namespace TextRPG
 
         private void ShowNormal() => SpriteRenderer.color = Color.white;
         private void ShowHighlight() => SpriteRenderer.color = Color.red;
+
+        public void ResetItem()
+        {
+            _mouseOver = false;
+            _currentCount = 0;
+        }
     }
 }
