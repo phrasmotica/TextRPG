@@ -36,11 +36,7 @@ namespace TextRPG
             OnEnter();
         }
 
-        private void OnMouseExit()
-        {
-            _mouseOver = false;
-            OnExit();
-        }
+        private void OnMouseExit() => HandleMouseExit();
 
         private void Update()
         {
@@ -55,7 +51,13 @@ namespace TextRPG
 
         public void ResetZone()
         {
+            HandleMouseExit();
+        }
+
+        private void HandleMouseExit()
+        {
             _mouseOver = false;
+            OnExit();
         }
     }
 }

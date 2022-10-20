@@ -38,11 +38,7 @@ namespace TextRPG
             OnEnter();
         }
 
-        private void OnMouseExit()
-        {
-            _mouseOver = false;
-            OnExit();
-        }
+        private void OnMouseExit() => HandleMouseExit();
 
         private void Update()
         {
@@ -60,12 +56,18 @@ namespace TextRPG
             }
         }
 
+        private void HandleMouseExit()
+        {
+            _mouseOver = false;
+            OnExit();
+        }
+
         private void ShowNormal() => SpriteRenderer.color = Color.white;
         private void ShowHighlight() => SpriteRenderer.color = Color.red;
 
         public void ResetItem()
         {
-            _mouseOver = false;
+            HandleMouseExit();
             _currentCount = 0;
         }
     }
