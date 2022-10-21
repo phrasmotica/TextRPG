@@ -13,6 +13,9 @@ namespace TextRPG
         [Range(0.02f, 0.1f)]
         public float CharacterIntervalSeconds;
 
+        [Range(0.02f, 0.1f)]
+        public float WhitespaceIntervalSeconds;
+
         public Button ContinueButton;
 
         public event Action OnFinish;
@@ -40,8 +43,13 @@ namespace TextRPG
         {
             while (Text.text.Length < _finalText.Length)
             {
-                Text.text += _finalText[Text.text.Length];
-                yield return new WaitForSeconds(CharacterIntervalSeconds);
+                var charToAdd = _finalText[Text.text.Length];
+                Text.text += charToAdd;
+
+                // wait a different amount of time for a space character
+                // TODO: wait the same amount of time for any number of space characters...
+                var waitTime = charToAdd == ' ' ? WhitespaceIntervalSeconds : CharacterIntervalSeconds;
+                yield return new WaitForSeconds(waitTime);
             }
 
             OnFinish();
