@@ -7,6 +7,8 @@ namespace TextRPG
     {
         private Dictionary<GameObject, bool> _enabledMap;
 
+        public ScrollingText TextScreen;
+
         public GameObject GameWonScreen;
 
         public ActivateZone GameWonZone;
@@ -24,6 +26,11 @@ namespace TextRPG
             }
         }
 
+        public void HideTextScreen()
+        {
+            TextScreen.gameObject.SetActive(false);
+        }
+
         public void ResetScreens()
         {
             foreach (var (screen, enabled) in _enabledMap)
@@ -32,6 +39,8 @@ namespace TextRPG
 
                 screen.SetActive(enabled);
             }
+
+            TextScreen.Begin();
         }
     }
 }
