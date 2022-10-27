@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -46,9 +47,18 @@ namespace TextRPG
                 var charToAdd = _finalText[Text.text.Length];
                 Text.text += charToAdd;
 
-                // wait a different amount of time for a space character
-                // TODO: wait the same amount of time for any number of space characters...
-                var waitTime = charToAdd == ' ' ? WhitespaceIntervalSeconds : CharacterIntervalSeconds;
+                var waitTime = CharacterIntervalSeconds;
+
+                if (charToAdd == ' ')
+                {
+                    // add a run of space characters in one go
+                    var followingSpaces = _finalText.Skip(Text.text.Length).TakeWhile(c => c == ' ');
+                    Text.text += string.Join(string.Empty, followingSpaces);
+
+                    // wait a different amount of time for a run of space characters
+                    waitTime = WhitespaceIntervalSeconds;
+                }
+
                 yield return new WaitForSeconds(waitTime);
             }
 
