@@ -21,6 +21,8 @@ namespace TextRPG
 
         public Button ContinueButton;
 
+        public AudioSource Audio;
+
         public event Action OnFinish;
 
         private string _finalText;
@@ -28,6 +30,7 @@ namespace TextRPG
         private void Awake()
         {
             OnFinish += ShowContinueButton;
+            OnFinish += StopAudio;
 
             Begin();
         }
@@ -35,6 +38,11 @@ namespace TextRPG
         public void Begin()
         {
             ContinueButton.gameObject.SetActive(false);
+            
+            if (Audio != null)
+            {
+                Audio.Play();
+            }
 
             _finalText = Text.text;
             Text.text = string.Empty;
@@ -73,6 +81,14 @@ namespace TextRPG
         private void ShowContinueButton()
         {
             ContinueButton.gameObject.SetActive(true);
+        }
+
+        private void StopAudio()
+        {
+            if (Audio != null)
+            {
+                Audio.Stop();
+            }
         }
     }
 }
