@@ -4,6 +4,7 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 namespace TextRPG
 {
@@ -38,11 +39,6 @@ namespace TextRPG
         public void Begin()
         {
             ContinueButton.gameObject.SetActive(false);
-            
-            if (Audio != null)
-            {
-                Audio.Play();
-            }
 
             _finalText = Text.text;
             Text.text = string.Empty;
@@ -70,6 +66,15 @@ namespace TextRPG
 
                     // wait a different amount of time for a run of space characters
                     waitTime = WhitespaceIntervalSeconds;
+                }
+
+                if (Audio != null)
+                {
+                    Audio.Stop();
+
+                    Audio.pitch = 1 + (float) (Random.value - 0.5) / 5;
+
+                    Audio.Play();
                 }
 
                 yield return new WaitForSeconds(waitTime);
