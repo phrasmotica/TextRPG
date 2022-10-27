@@ -17,6 +17,8 @@ namespace TextRPG
         [Range(0.02f, 0.1f)]
         public float WhitespaceIntervalSeconds;
 
+        public bool CompressWhitespace;
+
         public Button ContinueButton;
 
         public event Action OnFinish;
@@ -51,9 +53,12 @@ namespace TextRPG
 
                 if (charToAdd == ' ')
                 {
-                    // add a run of space characters in one go
-                    var followingSpaces = _finalText.Skip(Text.text.Length).TakeWhile(c => c == ' ');
-                    Text.text += string.Join(string.Empty, followingSpaces);
+                    if (CompressWhitespace)
+                    {
+                        // add a run of space characters in one go
+                        var followingSpaces = _finalText.Skip(Text.text.Length).TakeWhile(c => c == ' ');
+                        Text.text += string.Join(string.Empty, followingSpaces);
+                    }
 
                     // wait a different amount of time for a run of space characters
                     waitTime = WhitespaceIntervalSeconds;

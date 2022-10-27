@@ -1478,6 +1478,7 @@ MonoBehaviour:
   Text: {fileID: 941557796}
   CharacterIntervalSeconds: 0.03
   WhitespaceIntervalSeconds: 0.05
+  CompressWhitespace: 0
   ContinueButton: {fileID: 84225674}
 --- !u!1 &1016137531
 GameObject:
