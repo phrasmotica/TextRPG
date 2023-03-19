@@ -3,6 +3,7 @@ using System.Collections;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
@@ -20,19 +21,22 @@ namespace TextRPG
 
         public bool CompressWhitespace;
 
+        public bool ClickToSkip;
+
         public Button ContinueButton;
 
         public AudioSource Audio;
 
-        public event Action OnFinish;
+        public event UnityAction OnFinish;
+
+        public Clickable Clickable;
 
         private string _finalText;
 
+        private Coroutine _scrollingCoroutine;
+
         private void Awake()
         {
-            OnFinish += ShowContinueButton;
-            OnFinish += StopAudio;
-
             Begin();
         }
 
@@ -40,10 +44,12 @@ namespace TextRPG
         {
             ContinueButton.gameObject.SetActive(false);
 
+            Clickable.CanClick = () => ClickToSkip;
+
             _finalText = Text.text;
             Text.text = string.Empty;
 
-            StartCoroutine(ScrollText());
+            _scrollingCoroutine = StartCoroutine(ScrollText());
         }
 
         private IEnumerator ScrollText()
@@ -72,6 +78,8 @@ namespace TextRPG
                 {
                     Audio.Stop();
 
+                    // decrease denominator (currently 5) for a larger pitch range
+                    // TODO: add float field for adjusting the pitch range from Unity inspector
                     Audio.pitch = 1 + (float) (Random.value - 0.5) / 5;
 
                     Audio.Play();
@@ -80,7 +88,24 @@ namespace TextRPG
                 yield return new WaitForSeconds(waitTime);
             }
 
-            OnFinish();
+            Finish();
+        }
+
+        public void Skip()
+        {
+            Text.text = _finalText;
+
+            StopCoroutine(_scrollingCoroutine);
+
+            Finish();
+        }
+
+        private void Finish()
+        {
+            ShowContinueButton();
+            StopAudio();
+
+            OnFinish?.Invoke();
         }
 
         private void ShowContinueButton()

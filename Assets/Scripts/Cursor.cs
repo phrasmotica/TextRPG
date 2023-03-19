@@ -6,8 +6,6 @@ namespace TextRPG
     {
         public HandView HandView;
 
-        public ActivateZone GameWonZone;
-
         public SpriteRenderer CursorSprite;
 
         public Sprite HandOpenSprite;
@@ -20,8 +18,6 @@ namespace TextRPG
             HandView.OnPutBackItems += (_, remaining) => UpdateHandView(remaining.Length);
             HandView.OnClear += () => UpdateHandView(0);
 
-            GameWonZone.OnActivate += Hide;
-
             Show();
         }
 
@@ -31,7 +27,7 @@ namespace TextRPG
             ShowNativeCursor(false);
         }
 
-        private void Hide()
+        public void Hide()
         {
             CursorSprite.enabled = false;
             ShowNativeCursor(true);

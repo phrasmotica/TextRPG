@@ -11,12 +11,8 @@ namespace TextRPG
 
         public GameObject GameWonScreen;
 
-        public ActivateZone GameWonZone;
-
         private void Awake()
         {
-            GameWonZone.OnActivate += () => GameWonScreen.SetActive(true);
-
             _enabledMap = new Dictionary<GameObject, bool>();
 
             foreach (Transform t in transform)
@@ -25,6 +21,8 @@ namespace TextRPG
                 _enabledMap.Add(t.gameObject, t.gameObject.activeInHierarchy);
             }
         }
+
+        public void ShowGameWonScreen() => GameWonScreen.SetActive(true);
 
         public void HideTextScreen()
         {
