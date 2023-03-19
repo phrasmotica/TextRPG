@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
@@ -12,6 +13,8 @@ namespace TextRPG
     public class ScrollingText : MonoBehaviour
     {
         public TMP_Text Text;
+
+        public List<string> Paragraphs;
 
         [Range(0.02f, 0.1f)]
         public float CharacterIntervalSeconds;
@@ -31,7 +34,11 @@ namespace TextRPG
 
         public Clickable Clickable;
 
+        private int _currentIndex;
+
         private string _finalText;
+
+        private bool _isScrolling;
 
         private Coroutine _scrollingCoroutine;
 
@@ -42,18 +49,25 @@ namespace TextRPG
 
         public void Begin()
         {
-            ContinueButton.gameObject.SetActive(false);
+            _currentIndex = 0;
+            _finalText = string.Empty;
+            _isScrolling = false;
+            _scrollingCoroutine = null;
 
-            Clickable.CanClick = () => ClickToSkip;
+            if (Paragraphs.Any())
+            {
+                Clickable.CanClick = () => ClickToSkip;
 
-            _finalText = Text.text;
-            Text.text = string.Empty;
+                ShowContinueButton(false);
 
-            _scrollingCoroutine = StartCoroutine(ScrollText());
+                _scrollingCoroutine = StartCoroutine(ScrollText());
+            }
         }
 
         private IEnumerator ScrollText()
         {
+            StartParagraph();
+
             while (Text.text.Length < _finalText.Length)
             {
                 var charToAdd = _finalText[Text.text.Length];
@@ -88,29 +102,56 @@ namespace TextRPG
                 yield return new WaitForSeconds(waitTime);
             }
 
-            Finish();
+            EndParagraph();
+        }
+
+        private void StartParagraph()
+        {
+            _isScrolling = true;
+            _finalText = Paragraphs[_currentIndex];
+
+            Text.text = string.Empty;
         }
 
         public void Skip()
         {
-            Text.text = _finalText;
+            if (_isScrolling)
+            {
+                StopCoroutine(_scrollingCoroutine);
 
-            StopCoroutine(_scrollingCoroutine);
+                Text.text = _finalText;
 
-            Finish();
+                EndParagraph();
+            }
+            else if (_currentIndex < Paragraphs.Count - 1)
+            {
+                NextParagraph();
+            }
+            else
+            {
+                Finish();
+            }
         }
 
-        private void Finish()
+        private void EndParagraph()
         {
-            ShowContinueButton();
+            _isScrolling = false;
+
             StopAudio();
-
-            OnFinish?.Invoke();
+            ShowContinueButtonIfFinished();
         }
 
-        private void ShowContinueButton()
+        private void NextParagraph()
         {
-            ContinueButton.gameObject.SetActive(true);
+            _currentIndex++;
+            _scrollingCoroutine = StartCoroutine(ScrollText());
+
+            ShowContinueButton(false);
+        }
+
+        private void ShowContinueButton(bool show)
+        {
+            ContinueButton.gameObject.SetActive(show);
         }
 
         private void StopAudio()
@@ -119,6 +160,21 @@ namespace TextRPG
             {
                 Audio.Stop();
             }
+        }
+
+        private void ShowContinueButtonIfFinished()
+        {
+            if (_currentIndex >= Paragraphs.Count - 1)
+            {
+                ShowContinueButton(true);
+            }
+        }
+
+        private void Finish()
+        {
+            gameObject.SetActive(false);
+
+            OnFinish?.Invoke();
         }
     }
 }

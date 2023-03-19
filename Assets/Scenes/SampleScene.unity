@@ -1479,6 +1479,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Text: {fileID: 941557796}
+  Paragraphs:
+  - You find yourself inside a windowless room containing nothing but a key and a
+    door. What do you do?
+  - Surely there must be a way out with the objects in the room...
+  - I'm sure you'll figure it out.
   CharacterIntervalSeconds: 0.03
   WhitespaceIntervalSeconds: 0.05
   CompressWhitespace: 0
