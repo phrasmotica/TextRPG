@@ -34,6 +34,10 @@ namespace TextRPG
 
         public Clickable Clickable;
 
+        private RectTransform _textTransform;
+
+        private Vector2 _initialSize;
+
         private int _currentIndex;
 
         private string _finalText;
@@ -42,9 +46,24 @@ namespace TextRPG
 
         private Coroutine _scrollingCoroutine;
 
+        private bool _resizeNeeded;
+
         private void Awake()
         {
+            _textTransform = Text.GetComponent<RectTransform>();
+            _initialSize = _textTransform.sizeDelta;
+
             Begin();
+        }
+
+        private void Update()
+        {
+            // TODO: put this in its own script
+            if (_resizeNeeded)
+            {
+                _textTransform.sizeDelta = ComputeTextBoxSize();
+                _resizeNeeded = false;
+            }
         }
 
         public void Begin()
@@ -88,6 +107,8 @@ namespace TextRPG
                     waitTime = WhitespaceIntervalSeconds;
                 }
 
+                _textTransform.sizeDelta = ComputeTextBoxSize();
+
                 if (Audio != null)
                 {
                     Audio.Stop();
@@ -119,8 +140,6 @@ namespace TextRPG
             {
                 StopCoroutine(_scrollingCoroutine);
 
-                Text.text = _finalText;
-
                 EndParagraph();
             }
             else if (_currentIndex < Paragraphs.Count - 1)
@@ -133,9 +152,23 @@ namespace TextRPG
             }
         }
 
+        private Vector2 ComputeTextBoxSize()
+        {
+            var currentSize = _textTransform.sizeDelta;
+
+            var verticalMargins = Text.margin.z + Text.margin.w;
+            var fittedHeight = Text.GetRenderedValues(false).y + verticalMargins;
+
+            return new Vector2(currentSize.x, Math.Max(fittedHeight, _initialSize.y));
+        }
+
         private void EndParagraph()
         {
+            Text.text = _finalText;
             _isScrolling = false;
+
+            // workaround since the new text is only rendered in the next update
+            _resizeNeeded = true;
 
             StopAudio();
             ShowContinueButtonIfFinished();
