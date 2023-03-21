@@ -23,28 +23,18 @@ namespace TextRPG
 
         public void Show()
         {
-            CursorSprite.enabled = true;
-            ShowNativeCursor(false);
-        }
-
-        public void Hide()
-        {
-            CursorSprite.enabled = false;
-            ShowNativeCursor(true);
+            if (enabled)
+            {
+                CursorSprite.enabled = true;
+                ShowNativeCursor(false);
+            }
         }
 
         private void ShowNativeCursor(bool show) => UnityEngine.Cursor.visible = show;
 
         private void UpdateHandView(int handCount)
         {
-            if (handCount > 0)
-            {
-                CursorSprite.sprite = HandClosedSprite;
-            }
-            else
-            {
-                CursorSprite.sprite = HandOpenSprite;
-            }
+            CursorSprite.sprite = handCount > 0 ? HandClosedSprite : HandOpenSprite;
         }
     }
 }
