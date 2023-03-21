@@ -23,10 +23,19 @@ namespace TextRPG
 
         public void Show()
         {
-            if (enabled)
+            if (gameObject.activeInHierarchy)
             {
                 CursorSprite.enabled = true;
                 ShowNativeCursor(false);
+            }
+        }
+
+        public void Hide()
+        {
+            if (gameObject.activeInHierarchy)
+            {
+                CursorSprite.enabled = false;
+                ShowNativeCursor(true);
             }
         }
 
