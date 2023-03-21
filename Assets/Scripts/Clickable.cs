@@ -22,7 +22,7 @@ namespace TextRPG
 
         private void Update()
         {
-            if (_mouseOver && CanClick() && Input.GetMouseButtonUp(0))
+            if (_mouseOver && Input.GetMouseButtonUp(0) && CanClick())
             {
                 OnClick?.Invoke();
             }

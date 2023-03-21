@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using UnityEngine;
 
 namespace TextRPG
 {
@@ -17,7 +18,15 @@ namespace TextRPG
             Clickable.CanClick = CanActivate;
         }
 
-        public bool CanActivate() => HandView.Peek()?.Id == ItemId;
+        public bool CanActivate()
+        {
+            var roll = Assets.Scripts.Dice.RollD6();
+            var rollValue = roll.Values.Single().Value;
+
+            Debug.Log($"You rolled a {rollValue}");
+
+            return rollValue == 6 && HandView.Peek()?.Id == ItemId;
+        }
 
         public void Highlight() => HandView.ShowHighlight();
 
