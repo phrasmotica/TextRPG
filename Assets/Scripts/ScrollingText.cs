@@ -203,7 +203,7 @@ namespace TextRPG
             }
         }
 
-        private void Finish()
+        public void Finish()
         {
             gameObject.SetActive(false);
 

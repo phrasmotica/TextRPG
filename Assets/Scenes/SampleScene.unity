@@ -207,9 +207,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1783328521}
-        m_TargetAssemblyTypeName: TextRPG.ScreenManager, Assembly-CSharp
-        m_MethodName: HideTextScreen
+      - m_Target: {fileID: 1012704979}
+        m_TargetAssemblyTypeName: TextRPG.ScrollingText, Assembly-CSharp
+        m_MethodName: Finish
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2026,9 +2026,7 @@ MonoBehaviour:
   Text: {fileID: 941557796}
   Paragraphs:
   - You find yourself inside a windowless room containing nothing but a key and a
-    door. What do you do?You find yourself inside a windowless room containing nothing
-    but a key and a door. What do you do?You find yourself inside a windowless room
-    containing nothing but a key and a door. What do you do?
+    door. What do you do?
   - Surely there must be a way out with the objects in the room...
   - I'm sure you'll figure it out.
   CharacterIntervalSeconds: 0.03

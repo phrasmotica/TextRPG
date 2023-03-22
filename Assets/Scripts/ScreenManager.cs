@@ -53,11 +53,6 @@ namespace TextRPG
             DiceRollSuccessCallback = null;
         }
 
-        public void HideTextScreen()
-        {
-            TextScreen.gameObject.SetActive(false);
-        }
-
         public void ResetScreens()
         {
             foreach (var (screen, enabled) in _enabledMap)
