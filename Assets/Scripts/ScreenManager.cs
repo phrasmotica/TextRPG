@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace TextRPG
 {
@@ -10,6 +11,12 @@ namespace TextRPG
         public ScrollingText TextScreen;
 
         public GameObject GameWonScreen;
+
+        public DiceRollScreen DiceRollScreen;
+
+        public UnityAction DiceRollCallback;
+
+        public UnityAction DiceRollSuccessCallback;
 
         private void Awake()
         {
@@ -23,6 +30,28 @@ namespace TextRPG
         }
 
         public void ShowGameWonScreen() => GameWonScreen.SetActive(true);
+
+        public void ShowDiceRollScreen(UnityAction callback, UnityAction successCallback)
+        {
+            DiceRollScreen.gameObject.SetActive(true);
+            DiceRollCallback = callback;
+            DiceRollSuccessCallback = successCallback;
+        }
+
+        public void HideDiceRollScreen()
+        {
+            DiceRollScreen.gameObject.SetActive(false);
+
+            DiceRollCallback?.Invoke();
+
+            if (DiceRollScreen.IsSuccess())
+            {
+                DiceRollSuccessCallback?.Invoke();
+            }
+
+            DiceRollScreen.ResetScreen();
+            DiceRollSuccessCallback = null;
+        }
 
         public void HideTextScreen()
         {

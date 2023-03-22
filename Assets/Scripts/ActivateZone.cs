@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace TextRPG
 {
@@ -13,24 +12,38 @@ namespace TextRPG
 
         public Clickable Clickable;
 
+        public ScreenManager ScreenManager;
+
+        public Cursor Cursor;
+
         private void Awake()
         {
             Clickable.CanClick = CanActivate;
         }
 
-        public bool CanActivate()
-        {
-            var roll = Assets.Scripts.Dice.RollD6();
-            var rollValue = roll.Values.Single().Value;
-
-            Debug.Log($"You rolled a {rollValue}");
-
-            return rollValue == 6 && HandView.Peek()?.Id == ItemId;
-        }
+        public bool CanActivate() => HandView.Peek()?.Id == ItemId;
 
         public void Highlight() => HandView.ShowHighlight();
 
         public void Normal() => HandView.ShowNormal();
+
+        public void ShowDiceRoll()
+        {
+            HandView.Pause();
+
+            ScreenManager.ShowDiceRollScreen(
+                () =>
+                {
+                    HandView.Resume();
+                },
+                () =>
+                {
+                    Clear();
+
+                    ScreenManager.ShowGameWonScreen();
+                    Cursor.Hide();
+                });
+        }
 
         public void Clear()
         {

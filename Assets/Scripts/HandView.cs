@@ -11,6 +11,8 @@ namespace TextRPG
     {
         private List<IItem> _heldItems;
 
+        private bool _isPaused;
+
         public Inventory Inventory;
 
         public ItemFactory ItemFactory;
@@ -81,7 +83,10 @@ namespace TextRPG
 
         private void Update()
         {
-            FollowMouse(transform);
+            if (!_isPaused)
+            {
+                FollowMouse(transform);
+            }
         }
 
         public void Add(IItem item)
@@ -148,6 +153,16 @@ namespace TextRPG
         public void ShowHighlight()
         {
             HandItemPreview.color = Color.red;
+        }
+
+        public void Pause()
+        {
+            _isPaused = true;
+        }
+
+        public void Resume()
+        {
+            _isPaused = false;
         }
 
         private static void FollowMouse(Transform t)
