@@ -1,5 +1,4 @@
-﻿using Dice;
-using System.Linq;
+﻿using System;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -7,6 +6,8 @@ namespace TextRPG
 {
     public class DiceRollScreen : MonoBehaviour
     {
+        private WeightedDice _dice;
+
         private int _rollValue;
 
         [Range(1, 6)]
@@ -18,9 +19,14 @@ namespace TextRPG
 
         public UnityEvent OnFinish;
 
+        private void Awake()
+        {
+            _dice = WeightedDice.Fair(1, 2, 3, 4, 5, 6);
+        }
+
         public void Roll()
         {
-            _rollValue = RollD6();
+            _rollValue = RollDice();
             var success = IsSuccess();
 
             Debug.Log($"You rolled {_rollValue}, success={success}");
@@ -37,6 +43,8 @@ namespace TextRPG
 
         public void Show(UnityAction onFinish, UnityAction onSuccess)
         {
+            // TODO: allow re-rolling
+
             OnSuccess.AddListener(onSuccess);
             OnFinish.AddListener(onFinish);
         }
@@ -56,10 +64,8 @@ namespace TextRPG
             ResetScreen();
         }
 
-        private static int RollD6()
-        {
-            var roll = Roller.Roll("1d6");
-            return (int) roll.Values.Single().Value;
-        }
+        public float GetSuccessChance() => _dice.GetProbability(SuccessValue);
+
+        private int RollDice() => _dice.Roll(UnityEngine.Random.Range);
     }
 }
