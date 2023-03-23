@@ -16,8 +16,8 @@ namespace TextRPG
 
         private void SetText()
         {
-            var percentage = (int) (100 * DiceRollScreen.GetSuccessChance());
-            Text.SetText($"Change of success: {percentage}%");
+            var percentage = (int) (100 * DiceRollScreen.GetSuccessProbability());
+            Text.SetText($"Chance of success: {percentage}%");
         }
     }
 }
