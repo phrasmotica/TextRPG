@@ -8,11 +8,17 @@ namespace TextRPG
     {
         private Dictionary<GameObject, bool> _enabledMap;
 
+        public Cursor Cursor;
+
         public ScrollingText TextScreen;
 
-        public GameObject GameWonScreen;
+        public PickupItemManager PickupItemManager;
+
+        public ZoneManager ZoneManager;
 
         public GameObject DiceRollScreenPrefab;
+
+        public GameObject GameWonScreenPrefab;
 
         private void Awake()
         {
@@ -25,7 +31,16 @@ namespace TextRPG
             }
         }
 
-        public void ShowGameWonScreen() => GameWonScreen.SetActive(true);
+        public void ShowGameWonScreen()
+        {
+            var screen = Instantiate(GameWonScreenPrefab, transform).GetComponent<GameWonScreen>();
+
+            screen.OnFinish.AddListener(PickupItemManager.ResetItems);
+            screen.OnFinish.AddListener(ZoneManager.ResetZones);
+            screen.OnFinish.AddListener(Cursor.Hide);
+            screen.OnFinish.AddListener(ResetScreens);
+            screen.OnFinish.AddListener(() => Destroy(screen.gameObject));
+        }
 
         public void ShowDiceRollScreen(UnityAction onSuccess, UnityAction onFinish)
         {
