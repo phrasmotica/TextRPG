@@ -12,7 +12,7 @@ namespace TextRPG
 
         public GameObject GameWonScreen;
 
-        public DiceRollScreen DiceRollScreen;
+        public GameObject DiceRollScreenPrefab;
 
         private void Awake()
         {
@@ -27,9 +27,14 @@ namespace TextRPG
 
         public void ShowGameWonScreen() => GameWonScreen.SetActive(true);
 
-        public void ShowDiceRollScreen(UnityAction onFinish, UnityAction onSuccess)
+        public void ShowDiceRollScreen(UnityAction onSuccess, UnityAction onFinish)
         {
-            DiceRollScreen.Show(onFinish, onSuccess);
+            var screen = Instantiate(DiceRollScreenPrefab, transform).GetComponent<DiceRollScreen>();
+
+            screen.OnSuccess.AddListener(onSuccess);
+
+            screen.OnFinish.AddListener(onFinish);
+            screen.OnFinish.AddListener(() => Destroy(screen.gameObject));
         }
 
         public void ResetScreens()

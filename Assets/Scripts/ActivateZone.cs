@@ -34,14 +34,14 @@ namespace TextRPG
             ScreenManager.ShowDiceRollScreen(
                 () =>
                 {
-                    HandView.Resume();
-                },
-                () =>
-                {
                     Clear();
 
                     ScreenManager.ShowGameWonScreen();
                     Cursor.Hide();
+                },
+                () =>
+                {
+                    HandView.Resume();
                 });
         }
 

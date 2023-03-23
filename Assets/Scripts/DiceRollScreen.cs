@@ -37,27 +37,23 @@ namespace TextRPG
 
         public void Show(UnityAction onFinish, UnityAction onSuccess)
         {
-            gameObject.SetActive(true);
-
-            OnFinish.AddListener(onFinish);
             OnSuccess.AddListener(onSuccess);
+            OnFinish.AddListener(onFinish);
         }
 
         public void Finish()
         {
-            gameObject.SetActive(false);
-
-            OnFinish?.Invoke();
-
             if (IsSuccess())
             {
                 OnSuccess?.Invoke();
             }
 
-            ResetScreen();
+            OnFinish?.Invoke();
 
-            OnFinish.RemoveAllListeners();
             OnSuccess.RemoveAllListeners();
+            OnFinish.RemoveAllListeners();
+
+            ResetScreen();
         }
 
         private static int RollD6()
