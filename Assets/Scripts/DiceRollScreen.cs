@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -15,13 +16,25 @@ namespace TextRPG
 
         public UnityEvent<int, bool> OnRoll;
 
+        public UnityEvent<int, bool> OnReveal;
+
         public UnityEvent OnSuccess;
 
         public UnityEvent OnFinish;
 
         private void Awake()
         {
-            _dice = WeightedDice.Fair(1, 2, 3, 4, 5, 6);
+            _dice = new WeightedDice(new()
+            {
+                new Side(1, 1),
+                new Side(2, 1),
+                new Side(3, 1),
+                new Side(4, 1),
+                new Side(5, 1),
+                new Side(6, 5),
+            });
+
+            // TODO: instantiate ProbabilityText objects based on the sides of the die
         }
 
         public void Roll()
@@ -32,25 +45,23 @@ namespace TextRPG
             Debug.Log($"You rolled {_rollValue}, success={success}");
 
             OnRoll?.Invoke(_rollValue, success);
+
+            StartCoroutine(Reveal(_rollValue, success));
         }
 
-        public bool IsSuccess() => _rollValue == SuccessValue;
-
-        public void ResetScreen()
+        private IEnumerator Reveal(int value, bool success)
         {
-            _rollValue = 0;
+            yield return new WaitForSeconds(0.3f);
+
+            OnReveal?.Invoke(value, success);
+
+            StartCoroutine(Finish());
         }
 
-        public void Show(UnityAction onFinish, UnityAction onSuccess)
+        private IEnumerator Finish()
         {
-            // TODO: allow re-rolling
+            yield return new WaitForSeconds(1f);
 
-            OnSuccess.AddListener(onSuccess);
-            OnFinish.AddListener(onFinish);
-        }
-
-        public void Finish()
-        {
             if (IsSuccess())
             {
                 OnSuccess?.Invoke();
@@ -64,7 +75,26 @@ namespace TextRPG
             ResetScreen();
         }
 
-        public float GetSuccessChance() => _dice.GetProbability(SuccessValue);
+        public bool IsSuccess(int value) => SuccessValue == value;
+
+        public bool IsSuccess() => IsSuccess(_rollValue);
+
+        public void ResetScreen()
+        {
+            _rollValue = 0;
+        }
+
+        public void Show(UnityAction onFinish, UnityAction onSuccess)
+        {
+            // TODO: allow re-rolling the die
+
+            OnSuccess.AddListener(onSuccess);
+            OnFinish.AddListener(onFinish);
+        }
+
+        public float GetSuccessProbability() => GetProbability(SuccessValue);
+
+        public float GetProbability(int value) => _dice.GetProbability(value);
 
         private int RollDice() => _dice.Roll(UnityEngine.Random.Range);
     }
