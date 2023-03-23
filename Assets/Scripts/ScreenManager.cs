@@ -14,10 +14,6 @@ namespace TextRPG
 
         public DiceRollScreen DiceRollScreen;
 
-        public UnityAction DiceRollCallback;
-
-        public UnityAction DiceRollSuccessCallback;
-
         private void Awake()
         {
             _enabledMap = new Dictionary<GameObject, bool>();
@@ -31,26 +27,9 @@ namespace TextRPG
 
         public void ShowGameWonScreen() => GameWonScreen.SetActive(true);
 
-        public void ShowDiceRollScreen(UnityAction callback, UnityAction successCallback)
+        public void ShowDiceRollScreen(UnityAction onFinish, UnityAction onSuccess)
         {
-            DiceRollScreen.gameObject.SetActive(true);
-            DiceRollCallback = callback;
-            DiceRollSuccessCallback = successCallback;
-        }
-
-        public void HideDiceRollScreen()
-        {
-            DiceRollScreen.gameObject.SetActive(false);
-
-            DiceRollCallback?.Invoke();
-
-            if (DiceRollScreen.IsSuccess())
-            {
-                DiceRollSuccessCallback?.Invoke();
-            }
-
-            DiceRollScreen.ResetScreen();
-            DiceRollSuccessCallback = null;
+            DiceRollScreen.Show(onFinish, onSuccess);
         }
 
         public void ResetScreens()

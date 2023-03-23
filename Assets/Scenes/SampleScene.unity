@@ -135,7 +135,6 @@ GameObject:
   - component: {fileID: 180029378}
   - component: {fileID: 180029377}
   - component: {fileID: 180029376}
-  - component: {fileID: 180029379}
   m_Layer: 5
   m_Name: RollButton
   m_TagString: Untagged
@@ -208,10 +207,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 180029379}
-        m_TargetAssemblyTypeName: Assets.Scripts.DiceRollButton, Assembly-CSharp
-        m_MethodName: Disable
-        m_Mode: 1
+      - m_Target: {fileID: 180029376}
+        m_TargetAssemblyTypeName: UnityEngine.UI.Selectable, UnityEngine.UI
+        m_MethodName: set_interactable
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -270,19 +269,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 180029374}
   m_CullTransparentMesh: 1
---- !u!114 &180029379
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 180029374}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: baf70f4c03ea9b54895b01980a1aba30, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Button: {fileID: 180029376}
 --- !u!1 &193731236
 GameObject:
   m_ObjectHideFlags: 0
@@ -1970,21 +1956,9 @@ MonoBehaviour:
   OnFinish:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 180029379}
-        m_TargetAssemblyTypeName: Assets.Scripts.DiceRollButton, Assembly-CSharp
-        m_MethodName: Enable
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1783328521}
-        m_TargetAssemblyTypeName: TextRPG.ScreenManager, Assembly-CSharp
-        m_MethodName: HideDiceRollScreen
+      - m_Target: {fileID: 1939851532}
+        m_TargetAssemblyTypeName: TextRPG.DiceRollScreen, Assembly-CSharp
+        m_MethodName: Finish
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3595,6 +3569,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3aa451f0e9962454b9ef9c265f7a4cf7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SuccessValue: 6
   OnRoll:
     m_PersistentCalls:
       m_Calls:
@@ -3609,6 +3584,24 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
+        m_CallState: 2
+  OnSuccess:
+    m_PersistentCalls:
+      m_Calls: []
+  OnFinish:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 180029376}
+        m_TargetAssemblyTypeName: UnityEngine.UI.Selectable, UnityEngine.UI
+        m_MethodName: set_interactable
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
         m_CallState: 2
 --- !u!1 &2031719660
 GameObject:
