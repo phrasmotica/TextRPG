@@ -9,39 +9,40 @@ namespace TextRPG
 
         public bool Active;
 
-        public DiceRollScreen DiceRollScreen;
-
         public TMP_Text ValueText;
 
         public TMP_Text ChanceText;
 
-        private void Awake()
+        public void SetText(int value, float chance, bool success)
         {
-            SetText();
+            Value = value;
 
-            DiceRollScreen.OnReveal.AddListener((r, success) =>
-            {
-                Active = r == Value;
-                SetText();
-            });
-        }
-
-        private void SetText()
-        {
-            var colour = DiceRollScreen.IsSuccess(Value) ? Color.green : Color.red;
+            var colour = success ? Color.green : Color.red;
 
             if (!Active)
             {
-                colour.a = 0.3f;
+                colour = WithAlpha(colour, 0.3f);
             }
 
-            ValueText.SetText($"{Value}");
+            ValueText.SetText($"{value}");
             ValueText.color = colour;
 
-            var percentage = (int) (100 * DiceRollScreen.GetProbability(Value));
+            var percentage = (int) (100 * chance);
 
             ChanceText.SetText($"{percentage}%");
             ChanceText.color = colour;
+        }
+
+        public void SetActive(bool active)
+        {
+            Active = active;
+            ValueText.color = WithAlpha(ValueText.color, active ? 1f : 0.3f);
+            ChanceText.color = WithAlpha(ChanceText.color, active ? 1f : 0.3f);
+        }
+
+        private static Color WithAlpha(Color colour, float alpha)
+        {
+            return new Color(colour.r, colour.g, colour.b, alpha);
         }
     }
 }

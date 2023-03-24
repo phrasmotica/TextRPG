@@ -14,6 +14,8 @@ namespace TextRPG
         [Range(1, 6)]
         public int SuccessValue;
 
+        public UnityEvent<WeightedDice, Func<int, bool>> OnCreate;
+
         public UnityEvent<int, bool> OnRoll;
 
         public UnityEvent<int, bool> OnReveal;
@@ -23,6 +25,11 @@ namespace TextRPG
         public UnityEvent OnFinish;
 
         private void Awake()
+        {
+            CreateDice();
+        }
+
+        private void CreateDice()
         {
             _dice = new WeightedDice(new()
             {
@@ -34,7 +41,7 @@ namespace TextRPG
                 new Side(6, 5),
             });
 
-            // TODO: instantiate ProbabilityText objects based on the sides of the die
+            OnCreate?.Invoke(_dice, IsSuccess);
         }
 
         public void Roll()

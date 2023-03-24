@@ -6,7 +6,7 @@ namespace TextRPG
 {
     public class WeightedDice
     {
-        private readonly List<Side> _sides;
+        public List<Side> Sides { get; }
 
         public WeightedDice(List<Side> sides)
         {
@@ -15,12 +15,12 @@ namespace TextRPG
                 throw new InvalidOperationException();
             }
 
-            _sides = sides;
+            Sides = sides;
         }
 
         public int Roll(Func<int, int, int> random)
         {
-            var weightSum = _sides.Select(s => s.Weight).Sum();
+            var weightSum = Sides.Select(s => s.Weight).Sum();
 
             var r = random(0, weightSum);
 
@@ -32,21 +32,21 @@ namespace TextRPG
             while (r > currentSum)
             {
                 sideIndex++;
-                currentSum += _sides[sideIndex].Weight;
+                currentSum += Sides[sideIndex].Weight;
             }
 
-            return _sides[sideIndex].Value;
+            return Sides[sideIndex].Value;
         }
 
         public float GetProbability(int value)
         {
-            var side = _sides.FirstOrDefault(s => s.Value == value);
+            var side = Sides.FirstOrDefault(s => s.Value == value);
             if (side is null)
             {
                 return 0;
             }
 
-            return (float) side.Weight / _sides.Select(s => s.Weight).Sum();
+            return (float) side.Weight / Sides.Select(s => s.Weight).Sum();
         }
 
         public static WeightedDice Fair(params int[] values)
