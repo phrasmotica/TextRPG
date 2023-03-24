@@ -1268,7 +1268,7 @@ PrefabInstance:
     - target: {fileID: 6351713277425268537, guid: 5eac53320f08bc145b641fdd91f5e4ab, type: 3}
       propertyPath: Paragraphs.Array.data[0]
       value: You find yourself inside a windowless room containing nothing but a
-        key and a door. What do you do?
+        key and a door. What do you do?aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
       objectReference: {fileID: 0}
     - target: {fileID: 6351713277425268537, guid: 5eac53320f08bc145b641fdd91f5e4ab, type: 3}
       propertyPath: Paragraphs.Array.data[1]
@@ -1288,7 +1288,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6351713277425268538, guid: 5eac53320f08bc145b641fdd91f5e4ab, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6351713277425268538, guid: 5eac53320f08bc145b641fdd91f5e4ab, type: 3}
       propertyPath: m_AnchorMax.x
