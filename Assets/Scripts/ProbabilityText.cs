@@ -27,9 +27,9 @@ namespace TextRPG
             ValueText.SetText($"{value}");
             ValueText.color = colour;
 
-            var percentage = (int) (100 * chance);
+            var percentage = 100 * chance;
 
-            ChanceText.SetText($"{percentage}%");
+            ChanceText.SetText($"{percentage:F1}%");
             ChanceText.color = colour;
         }
 
