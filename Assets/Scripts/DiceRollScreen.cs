@@ -61,14 +61,14 @@ namespace TextRPG
 
             OnReveal?.Invoke(value, success);
 
-            StartCoroutine(Finish());
+            StartCoroutine(Finish(success));
         }
 
-        private IEnumerator Finish()
+        private IEnumerator Finish(bool success)
         {
             yield return new WaitForSeconds(1f);
 
-            if (IsSuccess())
+            if (success)
             {
                 OnSuccess?.Invoke();
             }

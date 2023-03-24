@@ -12,6 +12,11 @@ namespace TextRPG
 
         public void GenerateProbabilitiesText(WeightedDice dice, Func<int, bool> isSuccess)
         {
+            foreach (Transform t in transform)
+            {
+                Destroy(t.gameObject);
+            }
+
             _texts = new();
 
             var numSides = dice.Sides.Count;
