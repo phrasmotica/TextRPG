@@ -11,16 +11,24 @@ namespace TextRPG
 
         private int _rollValue;
 
+        private int _rollsLeft;
+
         public DiceType DiceType;
 
         [Range(1, 6)]
         public int SuccessValue;
+
+        // TODO: show number of rolls on screen
+        [Range(1, 3)]
+        public int Rolls;
 
         public UnityEvent<WeightedDice, Func<int, bool>> OnCreate;
 
         public UnityEvent<int, bool> OnRoll;
 
         public UnityEvent<int, bool> OnReveal;
+
+        public UnityEvent OnContinue;
 
         public UnityEvent OnSuccess;
 
@@ -29,6 +37,8 @@ namespace TextRPG
         private void Awake()
         {
             CreateDice();
+
+            _rollsLeft = Rolls;
         }
 
         private void CreateDice()
@@ -45,6 +55,8 @@ namespace TextRPG
 
         public void Roll()
         {
+            _rollsLeft--;
+
             _rollValue = RollDice();
             var success = IsSuccess();
 
@@ -52,16 +64,34 @@ namespace TextRPG
 
             OnRoll?.Invoke(_rollValue, success);
 
-            StartCoroutine(Reveal(_rollValue, success));
+            StartCoroutine(Reveal(_rollValue, success, _rollsLeft));
         }
 
-        private IEnumerator Reveal(int value, bool success)
+        private IEnumerator Reveal(int value, bool success, int rollsLeft)
         {
             yield return new WaitForSeconds(0.3f);
 
             OnReveal?.Invoke(value, success);
 
-            StartCoroutine(Finish(success));
+            if (success)
+            {
+                StartCoroutine(Finish(true));
+            }
+            else if (rollsLeft <= 0)
+            {
+                StartCoroutine(Finish(success));
+            }
+            else
+            {
+                StartCoroutine(Continue());
+            }
+        }
+
+        private IEnumerator Continue()
+        {
+            yield return new WaitForSeconds(1f);
+
+            OnContinue?.Invoke();
         }
 
         private IEnumerator Finish(bool success)
@@ -75,8 +105,9 @@ namespace TextRPG
 
             OnFinish?.Invoke();
 
-            OnSuccess.RemoveAllListeners();
-            OnFinish.RemoveAllListeners();
+            OnContinue?.RemoveAllListeners();
+            OnSuccess?.RemoveAllListeners();
+            OnFinish?.RemoveAllListeners();
 
             ResetScreen();
         }
@@ -88,14 +119,7 @@ namespace TextRPG
         public void ResetScreen()
         {
             _rollValue = 0;
-        }
-
-        public void Show(UnityAction onFinish, UnityAction onSuccess)
-        {
-            // TODO: allow re-rolling the die
-
-            OnSuccess.AddListener(onSuccess);
-            OnFinish.AddListener(onFinish);
+            _rollsLeft = Rolls;
         }
 
         public float GetSuccessProbability() => GetProbability(SuccessValue);

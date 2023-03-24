@@ -47,5 +47,13 @@ namespace TextRPG
                 text.SetActive(text.Value == value);
             }
         }
+
+        public void ResetText()
+        {
+            foreach (var text in _texts)
+            {
+                text.SetActive(false);
+            }
+        }
     }
 }
