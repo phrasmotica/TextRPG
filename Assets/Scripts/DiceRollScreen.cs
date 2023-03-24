@@ -11,6 +11,8 @@ namespace TextRPG
 
         private int _rollValue;
 
+        public DiceType DiceType;
+
         [Range(1, 6)]
         public int SuccessValue;
 
@@ -31,15 +33,12 @@ namespace TextRPG
 
         private void CreateDice()
         {
-            _dice = new WeightedDice(new()
+            _dice = DiceType switch
             {
-                new Side(1, 1),
-                new Side(2, 1),
-                new Side(3, 1),
-                new Side(4, 1),
-                new Side(5, 1),
-                new Side(6, 5),
-            });
+                DiceType.FairD6 => WeightedDice.FairD6(),
+                DiceType.FavourableD6 => WeightedDice.FavourableD6(),
+                _ => throw new InvalidOperationException(),
+            };
 
             OnCreate?.Invoke(_dice, IsSuccess);
         }
@@ -104,5 +103,11 @@ namespace TextRPG
         public float GetProbability(int value) => _dice.GetProbability(value);
 
         private int RollDice() => _dice.Roll(UnityEngine.Random.Range);
+    }
+
+    public enum DiceType
+    {
+        FairD6,
+        FavourableD6,
     }
 }

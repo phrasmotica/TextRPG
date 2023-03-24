@@ -49,9 +49,22 @@ namespace TextRPG
             return (float) side.Weight / Sides.Select(s => s.Weight).Sum();
         }
 
-        public static WeightedDice Fair(params int[] values)
+        /// <summary>
+        /// Creates a D6 where each side is equally likely to appear.
+        /// </summary>
+        public static WeightedDice FairD6()
         {
-            return new WeightedDice(values.Select(v => new Side(v, 1)).ToList());
+            var sides = Enumerable.Range(1, 6).Select(v => new Side(v, 1)).ToList();
+            return new WeightedDice(sides);
+        }
+
+        /// <summary>
+        /// Creates a D6 where the high values are twice as likely to appear as the low values.
+        /// </summary>
+        public static WeightedDice FavourableD6()
+        {
+            var sides = Enumerable.Range(1, 6).Select(v => new Side(v, v > 3 ? 2 : 1)).ToList();
+            return new WeightedDice(sides);
         }
 
         // TODO: add builder methods
