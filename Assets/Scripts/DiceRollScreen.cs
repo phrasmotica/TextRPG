@@ -24,7 +24,7 @@ namespace TextRPG
 
         public UnityEvent<WeightedDice, Func<int, bool>> OnCreate;
 
-        public UnityEvent OnRoll;
+        public UnityEvent<WeightedDice> OnRoll;
 
         public UnityEvent<int, bool> OnReveal;
 
@@ -57,7 +57,7 @@ namespace TextRPG
         {
             _rollsLeft--;
 
-            OnRoll?.Invoke();
+            OnRoll?.Invoke(_dice);
 
             _rollValue = RollDice();
             var success = IsSuccess();

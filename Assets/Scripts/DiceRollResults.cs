@@ -26,7 +26,7 @@ namespace TextRPG
             rectTransform.sizeDelta = new(textWidth, rectTransform.sizeDelta.y);
         }
 
-        public void AddRollText()
+        public void AddRollText(WeightedDice dice)
         {
             var text = Instantiate(ResultTextPrefab, transform).GetComponent<DiceRollText>();
             _texts.Add(text);
@@ -40,7 +40,7 @@ namespace TextRPG
             var posX = (_texts.Count - 1) * textWidth - totalWidth / 2;
             text.transform.localPosition = new(posX, 0);
 
-            text.SetRolling();
+            text.SetRolling(dice);
             _current = text;
         }
 
