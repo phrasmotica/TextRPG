@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 namespace TextRPG
@@ -10,7 +9,9 @@ namespace TextRPG
 
         private List<DiceRollText> _texts;
 
-        public void GenerateResultsText(WeightedDice dice, Func<int, bool> isSuccess)
+        private DiceRollText _current;
+
+        private void Awake()
         {
             foreach (Transform t in transform)
             {
@@ -19,41 +20,43 @@ namespace TextRPG
 
             _texts = new();
 
-            var numSides = dice.Sides.Count;
             var textWidth = ResultTextPrefab.GetComponent<RectTransform>().sizeDelta.x;
-            var totalWidth = numSides * textWidth;
+
+            var rectTransform = GetComponent<RectTransform>();
+            rectTransform.sizeDelta = new(textWidth, rectTransform.sizeDelta.y);
+        }
+
+        public void AddRollText()
+        {
+            var text = Instantiate(ResultTextPrefab, transform).GetComponent<DiceRollText>();
+            _texts.Add(text);
+
+            var textWidth = ResultTextPrefab.GetComponent<RectTransform>().sizeDelta.x;
+            var totalWidth = _texts.Count * textWidth;
 
             var rectTransform = GetComponent<RectTransform>();
             rectTransform.sizeDelta = new(totalWidth, rectTransform.sizeDelta.y);
 
-            for (var i = 0; i < numSides; i++)
-            {
-                var text = Instantiate(ResultTextPrefab, transform).GetComponent<DiceRollText>();
-                _texts.Add(text);
+            var posX = (_texts.Count - 1) * textWidth - totalWidth / 2;
+            text.transform.localPosition = new(posX, 0);
 
-                // ensure they are spaced correctly
-                var posX = i * textWidth - totalWidth / 2;
-                text.transform.localPosition = new(posX, 0);
-
-                //var value = dice.Sides[i].Value;
-                //text.SetText(value, dice.GetProbability(value), isSuccess(value));
-            }
+            text.SetRolling();
+            _current = text;
         }
 
-        //public void Reveal(int value, bool success)
-        //{
-        //    foreach (var text in _texts)
-        //    {
-        //        text.SetActive(text.Value == value);
-        //    }
-        //}
+        public void Reveal(int value, bool success)
+        {
+            _current.SetResult(value, success);
+        }
 
-        //public void ResetText()
-        //{
-        //    foreach (var text in _texts)
-        //    {
-        //        text.SetActive(false);
-        //    }
-        //}
+        public void ResetText()
+        {
+            foreach (var text in _texts)
+            {
+                text.ResetText();
+            }
+
+            _current = null;
+        }
     }
 }

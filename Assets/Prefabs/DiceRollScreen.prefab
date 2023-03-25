@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3965301685468031186}
+  - component: {fileID: 8320277682088523794}
   m_Layer: 5
   m_Name: Results
   m_TagString: Untagged
@@ -27,8 +28,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 3330800859969358786}
+  m_Children: []
   m_Father: {fileID: 3330800860129199263}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -37,6 +37,19 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -100}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 1}
+--- !u!114 &8320277682088523794
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2909779731227825606}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6291e7e41fd0e704294ffb10b45e18b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ResultTextPrefab: {fileID: 3178638103340635294, guid: 504be8fc1a0bbb9408697ccfbd725363, type: 3}
 --- !u!1 &3330800860129199262
 GameObject:
   m_ObjectHideFlags: 0
@@ -150,9 +163,9 @@ MonoBehaviour:
   OnRoll:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3330800859969358785}
-        m_TargetAssemblyTypeName: TextRPG.DiceRollText, Assembly-CSharp
-        m_MethodName: SetRolling
+      - m_Target: {fileID: 8320277682088523794}
+        m_TargetAssemblyTypeName: TextRPG.DiceRollResults, Assembly-CSharp
+        m_MethodName: AddRollText
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -165,9 +178,9 @@ MonoBehaviour:
   OnReveal:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3330800859969358785}
-        m_TargetAssemblyTypeName: TextRPG.DiceRollText, Assembly-CSharp
-        m_MethodName: SetResult
+      - m_Target: {fileID: 568464940755871395}
+        m_TargetAssemblyTypeName: TextRPG.DiceProbabilities, Assembly-CSharp
+        m_MethodName: Reveal
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -177,8 +190,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 568464940755871395}
-        m_TargetAssemblyTypeName: TextRPG.DiceProbabilities, Assembly-CSharp
+      - m_Target: {fileID: 8320277682088523794}
+        m_TargetAssemblyTypeName: TextRPG.DiceRollResults, Assembly-CSharp
         m_MethodName: Reveal
         m_Mode: 0
         m_Arguments:
@@ -204,7 +217,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 3330800859969358785}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: TextRPG.DiceRollText, Assembly-CSharp
         m_MethodName: ResetText
         m_Mode: 1
@@ -571,75 +584,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ProbabilitiesTextPrefab: {fileID: 8407713576264299688, guid: 493887b2ee6a4354ca4215c8eff6c55a, type: 3}
---- !u!1001 &154718051821543259
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 3965301685468031186}
-    m_Modifications:
-    - target: {fileID: 3178638103340635289, guid: 504be8fc1a0bbb9408697ccfbd725363, type: 3}
-      propertyPath: m_RootOrder
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3178638103340635289, guid: 504be8fc1a0bbb9408697ccfbd725363, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3178638103340635289, guid: 504be8fc1a0bbb9408697ccfbd725363, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3178638103340635289, guid: 504be8fc1a0bbb9408697ccfbd725363, type: 3}
-      propertyPath: m_AnchorMin.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3178638103340635289, guid: 504be8fc1a0bbb9408697ccfbd725363, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3178638103340635289, guid: 504be8fc1a0bbb9408697ccfbd725363, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3178638103340635289, guid: 504be8fc1a0bbb9408697ccfbd725363, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3178638103340635289, guid: 504be8fc1a0bbb9408697ccfbd725363, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3178638103340635289, guid: 504be8fc1a0bbb9408697ccfbd725363, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3178638103340635289, guid: 504be8fc1a0bbb9408697ccfbd725363, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3178638103340635294, guid: 504be8fc1a0bbb9408697ccfbd725363, type: 3}
-      propertyPath: m_Name
-      value: DiceRollResultText
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 504be8fc1a0bbb9408697ccfbd725363, type: 3}
---- !u!114 &3330800859969358785 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3178638103340635290, guid: 504be8fc1a0bbb9408697ccfbd725363, type: 3}
-  m_PrefabInstance: {fileID: 154718051821543259}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1679e6b1691261a448f6fbdf178676c3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!224 &3330800859969358786 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 3178638103340635289, guid: 504be8fc1a0bbb9408697ccfbd725363, type: 3}
-  m_PrefabInstance: {fileID: 154718051821543259}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &576706364171289330
 PrefabInstance:
   m_ObjectHideFlags: 0
