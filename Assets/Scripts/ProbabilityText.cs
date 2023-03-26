@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using TextRPG.Extensions;
+using TMPro;
 using UnityEngine;
 
 namespace TextRPG
@@ -21,7 +22,7 @@ namespace TextRPG
 
             if (!Active)
             {
-                colour = WithAlpha(colour, 0.3f);
+                colour = colour.WithAlpha(0.3f);
             }
 
             ValueText.SetText($"{value}");
@@ -36,13 +37,8 @@ namespace TextRPG
         public void SetActive(bool active)
         {
             Active = active;
-            ValueText.color = WithAlpha(ValueText.color, active ? 1f : 0.3f);
-            ChanceText.color = WithAlpha(ChanceText.color, active ? 1f : 0.3f);
-        }
-
-        private static Color WithAlpha(Color colour, float alpha)
-        {
-            return new Color(colour.r, colour.g, colour.b, alpha);
+            ValueText.color = ValueText.color.WithAlpha(active ? 1f : 0.3f);
+            ChanceText.color = ChanceText.color.WithAlpha(active ? 1f : 0.3f);
         }
     }
 }

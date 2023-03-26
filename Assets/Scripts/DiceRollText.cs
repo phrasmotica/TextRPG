@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using TextRPG.Extensions;
 using TMPro;
 using UnityEngine;
 
@@ -25,7 +26,7 @@ namespace TextRPG
 
         private IEnumerator Roll(WeightedDice dice)
         {
-            Text.color = WithAlpha(Color.black, 0.3f);
+            Text.color = Color.black.WithAlpha(0.3f);
             Text.fontStyle = FontStyles.Normal;
 
             while (_isRolling)
@@ -53,12 +54,6 @@ namespace TextRPG
             Text.SetText(_initialText);
             Text.color = Color.black;
             Text.fontStyle = FontStyles.Normal;
-        }
-
-        private static Color WithAlpha(Color colour, float alpha)
-        {
-            // TODO: create extension method for this
-            return new Color(colour.r, colour.g, colour.b, alpha);
         }
     }
 }
