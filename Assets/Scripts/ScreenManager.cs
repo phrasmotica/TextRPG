@@ -1,46 +1,63 @@
 ﻿using System.Collections.Generic;
+using TextRPG.Dice;
+using TextRPG.Inventory;
+using TextRPG.TextScreen;
+using TextRPG.Zones;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace TextRPG
 {
     public class ScreenManager : MonoBehaviour
     {
-        private Dictionary<GameObject, bool> _enabledMap;
+        public List<string> InitialParagraphs;
 
-        public ScrollingText TextScreen;
+        public Inventory.Cursor Cursor;
 
-        public GameObject GameWonScreen;
+        public PickupItemManager PickupItemManager;
 
-        public ActivateZone GameWonZone;
+        public ZoneManager ZoneManager;
+
+        public GameObject TextScreenPrefab;
+
+        public GameObject DiceRollScreenPrefab;
+
+        public GameObject GameWonScreenPrefab;
 
         private void Awake()
         {
-            GameWonZone.OnActivate += () => GameWonScreen.SetActive(true);
-
-            _enabledMap = new Dictionary<GameObject, bool>();
-
-            foreach (Transform t in transform)
-            {
-                // store initial enabled state of all screens
-                _enabledMap.Add(t.gameObject, t.gameObject.activeInHierarchy);
-            }
+            ShowInitialTextScreen();
         }
 
-        public void HideTextScreen()
+        public void ShowInitialTextScreen()
         {
-            TextScreen.gameObject.SetActive(false);
+            var screen = Instantiate(TextScreenPrefab, transform).GetComponent<ScrollingText>();
+
+            screen.Paragraphs = InitialParagraphs;
+            screen.OnFinish.AddListener(() => Destroy(screen.gameObject));
+
+            screen.Begin();
         }
 
-        public void ResetScreens()
+        public void ShowGameWonScreen()
         {
-            foreach (var (screen, enabled) in _enabledMap)
-            {
-                Debug.Log($"Resetting screen {screen.name} to enabled={enabled}");
+            var screen = Instantiate(GameWonScreenPrefab, transform).GetComponent<GameWonScreen>();
 
-                screen.SetActive(enabled);
-            }
+            screen.OnFinish.AddListener(PickupItemManager.ResetItems);
+            screen.OnFinish.AddListener(ZoneManager.ResetZones);
+            screen.OnFinish.AddListener(Cursor.Hide);
+            screen.OnFinish.AddListener(ShowInitialTextScreen);
+            screen.OnFinish.AddListener(() => Destroy(screen.gameObject));
+        }
 
-            TextScreen.Begin();
+        public void ShowDiceRollScreen(UnityAction onSuccess, UnityAction onFinish)
+        {
+            var screen = Instantiate(DiceRollScreenPrefab, transform).GetComponent<DiceRollScreen>();
+
+            screen.OnSuccess.AddListener(onSuccess);
+
+            screen.OnFinish.AddListener(onFinish);
+            screen.OnFinish.AddListener(() => Destroy(screen.gameObject));
         }
     }
 }
