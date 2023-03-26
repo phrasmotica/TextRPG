@@ -10,15 +10,15 @@ namespace TextRPG
 {
     public class ScreenManager : MonoBehaviour
     {
-        private Dictionary<GameObject, bool> _enabledMap;
+        public List<string> InitialParagraphs;
 
         public Inventory.Cursor Cursor;
-
-        public ScrollingText TextScreen;
 
         public PickupItemManager PickupItemManager;
 
         public ZoneManager ZoneManager;
+
+        public GameObject TextScreenPrefab;
 
         public GameObject DiceRollScreenPrefab;
 
@@ -26,13 +26,17 @@ namespace TextRPG
 
         private void Awake()
         {
-            _enabledMap = new Dictionary<GameObject, bool>();
+            ShowInitialTextScreen();
+        }
 
-            foreach (Transform t in transform)
-            {
-                // store initial enabled state of all screens
-                _enabledMap.Add(t.gameObject, t.gameObject.activeInHierarchy);
-            }
+        public void ShowInitialTextScreen()
+        {
+            var screen = Instantiate(TextScreenPrefab, transform).GetComponent<ScrollingText>();
+
+            screen.Paragraphs = InitialParagraphs;
+            screen.OnFinish.AddListener(() => Destroy(screen.gameObject));
+
+            screen.Begin();
         }
 
         public void ShowGameWonScreen()
@@ -42,7 +46,7 @@ namespace TextRPG
             screen.OnFinish.AddListener(PickupItemManager.ResetItems);
             screen.OnFinish.AddListener(ZoneManager.ResetZones);
             screen.OnFinish.AddListener(Cursor.Hide);
-            screen.OnFinish.AddListener(ResetScreens);
+            screen.OnFinish.AddListener(ShowInitialTextScreen);
             screen.OnFinish.AddListener(() => Destroy(screen.gameObject));
         }
 
@@ -54,18 +58,6 @@ namespace TextRPG
 
             screen.OnFinish.AddListener(onFinish);
             screen.OnFinish.AddListener(() => Destroy(screen.gameObject));
-        }
-
-        public void ResetScreens()
-        {
-            foreach (var (screen, enabled) in _enabledMap)
-            {
-                Debug.Log($"Resetting screen {screen.name} to enabled={enabled}");
-
-                screen.SetActive(enabled);
-            }
-
-            TextScreen.Begin();
         }
     }
 }

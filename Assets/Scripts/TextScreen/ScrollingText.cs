@@ -32,7 +32,7 @@ namespace TextRPG.TextScreen
 
         public UnityEvent OnTextChange;
 
-        public event UnityAction OnFinish;
+        public UnityEvent OnFinish;
 
         public Clickable Clickable;
 
@@ -43,11 +43,6 @@ namespace TextRPG.TextScreen
         private bool _isScrolling;
 
         private Coroutine _scrollingCoroutine;
-
-        private void Awake()
-        {
-            Begin();
-        }
 
         public void Begin()
         {
@@ -177,8 +172,6 @@ namespace TextRPG.TextScreen
 
         public void Finish()
         {
-            gameObject.SetActive(false);
-
             OnFinish?.Invoke();
         }
     }
