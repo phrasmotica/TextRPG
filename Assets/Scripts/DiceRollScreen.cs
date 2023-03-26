@@ -11,18 +11,17 @@ namespace TextRPG
 
         private int _rollValue;
 
-        private int _rollsLeft;
+        private int _attemptsLeft;
 
         public DiceType DiceType;
 
         [Range(1, 6)]
         public int SuccessValue;
 
-        // TODO: show number of rolls on screen
         [Range(1, 3)]
-        public int Rolls;
+        public int Attempts;
 
-        public UnityEvent<WeightedDice, Func<int, bool>> OnCreate;
+        public UnityEvent<WeightedDice, Func<int, bool>, int> OnCreate;
 
         public UnityEvent<WeightedDice> OnRoll;
 
@@ -38,7 +37,7 @@ namespace TextRPG
         {
             CreateDice();
 
-            _rollsLeft = Rolls;
+            _attemptsLeft = Attempts;
         }
 
         private void CreateDice()
@@ -50,12 +49,12 @@ namespace TextRPG
                 _ => throw new InvalidOperationException(),
             };
 
-            OnCreate?.Invoke(_dice, IsSuccess);
+            OnCreate?.Invoke(_dice, IsSuccess, Attempts);
         }
 
         public void Roll()
         {
-            _rollsLeft--;
+            _attemptsLeft--;
 
             OnRoll?.Invoke(_dice);
 
@@ -64,7 +63,7 @@ namespace TextRPG
 
             Debug.Log($"You rolled {_rollValue}, success={success}");
 
-            StartCoroutine(Reveal(_rollValue, success, _rollsLeft));
+            StartCoroutine(Reveal(_rollValue, success, _attemptsLeft));
         }
 
         private IEnumerator Reveal(int value, bool success, int rollsLeft)
@@ -119,7 +118,7 @@ namespace TextRPG
         public void ResetScreen()
         {
             _rollValue = 0;
-            _rollsLeft = Rolls;
+            _attemptsLeft = Attempts;
         }
 
         public float GetSuccessProbability() => GetProbability(SuccessValue);

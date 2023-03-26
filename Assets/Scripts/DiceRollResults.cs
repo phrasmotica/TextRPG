@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace TextRPG
@@ -9,9 +10,11 @@ namespace TextRPG
 
         private List<DiceRollText> _texts;
 
-        private DiceRollText _current;
+        private WeightedDice _dice;
 
-        private void Awake()
+        private int _currentRoll;
+
+        public void GenerateResultsText(WeightedDice dice, Func<int, bool> isSuccess, int attempts)
         {
             foreach (Transform t in transform)
             {
@@ -19,44 +22,71 @@ namespace TextRPG
             }
 
             _texts = new();
+            _dice = dice;
 
             var textWidth = ResultTextPrefab.GetComponent<RectTransform>().sizeDelta.x;
-
-            var rectTransform = GetComponent<RectTransform>();
-            rectTransform.sizeDelta = new(textWidth, rectTransform.sizeDelta.y);
-        }
-
-        public void AddRollText(WeightedDice dice)
-        {
-            var text = Instantiate(ResultTextPrefab, transform).GetComponent<DiceRollText>();
-            _texts.Add(text);
-
-            var textWidth = ResultTextPrefab.GetComponent<RectTransform>().sizeDelta.x;
-            var totalWidth = _texts.Count * textWidth;
+            var totalWidth = attempts * textWidth;
 
             var rectTransform = GetComponent<RectTransform>();
             rectTransform.sizeDelta = new(totalWidth, rectTransform.sizeDelta.y);
 
-            var posX = (_texts.Count - 1) * textWidth - totalWidth / 2;
-            text.transform.localPosition = new(posX, 0);
+            for (var i = 0; i < attempts; i++)
+            {
+                var text = Instantiate(ResultTextPrefab, transform).GetComponent<DiceRollText>();
+                _texts.Add(text);
 
-            text.SetRolling(dice);
-            _current = text;
+                var posX = i * textWidth - totalWidth / 2;
+                text.transform.localPosition = new(posX, 0);
+
+                if (i == 0)
+                {
+                    text.Prime();
+                }
+            }
+        }
+
+        public void SetRolling()
+        {
+            if (_currentRoll < _texts.Count)
+            {
+                var text = _texts[_currentRoll];
+                text.SetRolling(_dice);
+            }
         }
 
         public void Reveal(int value, bool success)
         {
-            _current.SetResult(value, success);
+            if (_currentRoll < _texts.Count)
+            {
+                var text = _texts[_currentRoll];
+                text.SetResult(value, success);
+            }
+        }
+
+        public void Next()
+        {
+            if (_currentRoll < _texts.Count - 1)
+            {
+                _currentRoll++;
+                var text = _texts[_currentRoll];
+                text.Prime();
+            }
         }
 
         public void ResetText()
         {
-            foreach (var text in _texts)
+            for (var i = 0; i < _texts.Count; i++)
             {
+                var text = _texts[i];
                 text.ResetText();
+
+                if (i == 0)
+                {
+                    text.Prime();
+                }
             }
 
-            _current = null;
+            _currentRoll = 0;
         }
     }
 }

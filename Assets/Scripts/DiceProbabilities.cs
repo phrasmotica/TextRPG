@@ -10,7 +10,7 @@ namespace TextRPG
 
         private List<ProbabilityText> _texts;
 
-        public void GenerateProbabilitiesText(WeightedDice dice, Func<int, bool> isSuccess)
+        public void GenerateProbabilitiesText(WeightedDice dice, Func<int, bool> isSuccess, int attempts)
         {
             foreach (Transform t in transform)
             {

@@ -18,6 +18,11 @@ namespace TextRPG
             _initialText = Text.text;
         }
 
+        public void Prime()
+        {
+            Text.color = Color.black;
+        }
+
         public void SetRolling(WeightedDice dice)
         {
             _isRolling = true;
