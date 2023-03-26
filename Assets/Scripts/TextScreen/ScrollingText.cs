@@ -5,7 +5,6 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 namespace TextRPG.TextScreen
@@ -24,17 +23,11 @@ namespace TextRPG.TextScreen
 
         public bool CompressWhitespace;
 
-        public bool ClickToSkip;
-
-        public Button ContinueButton;
-
         public AudioSource Audio;
 
         public UnityEvent OnTextChange;
 
         public UnityEvent OnFinish;
-
-        public Clickable Clickable;
 
         private int _currentIndex;
 
@@ -53,10 +46,6 @@ namespace TextRPG.TextScreen
 
             if (Paragraphs.Any())
             {
-                Clickable.CanClick = () => ClickToSkip;
-
-                ShowContinueButton(false);
-
                 _scrollingCoroutine = StartCoroutine(ScrollText());
             }
         }
@@ -87,7 +76,7 @@ namespace TextRPG.TextScreen
 
                 OnTextChange?.Invoke();
 
-                if (Audio != null)
+                if (Audio != null && Audio.enabled)
                 {
                     Audio.Stop();
 
@@ -138,20 +127,12 @@ namespace TextRPG.TextScreen
             OnTextChange?.Invoke();
 
             StopAudio();
-            ShowContinueButtonIfFinished();
         }
 
         private void NextParagraph()
         {
             _currentIndex++;
             _scrollingCoroutine = StartCoroutine(ScrollText());
-
-            ShowContinueButton(false);
-        }
-
-        private void ShowContinueButton(bool show)
-        {
-            ContinueButton.gameObject.SetActive(show);
         }
 
         private void StopAudio()
@@ -162,15 +143,7 @@ namespace TextRPG.TextScreen
             }
         }
 
-        private void ShowContinueButtonIfFinished()
-        {
-            if (_currentIndex >= Paragraphs.Count - 1)
-            {
-                ShowContinueButton(true);
-            }
-        }
-
-        public void Finish()
+        private void Finish()
         {
             OnFinish?.Invoke();
         }
