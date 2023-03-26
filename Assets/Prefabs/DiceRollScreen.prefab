@@ -47,9 +47,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 2909779731227825606}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6291e7e41fd0e704294ffb10b45e18b5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Script: {fileID: 11500000, guid: 33e6e344ba428c14d855faaab4439bcc, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
   ResultTextPrefab: {fileID: 3178638103340635294, guid: 504be8fc1a0bbb9408697ccfbd725363, type: 3}
 --- !u!1 &3330800860129199262
 GameObject:
@@ -111,8 +111,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_Material: {fileID: 0}
   m_Color: {r: 0.48688403, g: 0.7169812, b: 0.4024564, a: 1}
   m_RaycastTarget: 1
@@ -140,9 +140,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 3330800860129199262}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3aa451f0e9962454b9ef9c265f7a4cf7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Script: {fileID: 11500000, guid: 4527fee9539d1044e9411405b28a3f59, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
   DiceType: 1
   SuccessValue: 6
   Attempts: 3
@@ -150,7 +150,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 568464940755871395}
-        m_TargetAssemblyTypeName: TextRPG.DiceProbabilities, Assembly-CSharp
+        m_TargetAssemblyTypeName: TextRPG.Dice.DiceProbabilities, Assembly-CSharp
         m_MethodName: GenerateProbabilitiesText
         m_Mode: 0
         m_Arguments:
@@ -158,11 +158,11 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 8320277682088523794}
-        m_TargetAssemblyTypeName: TextRPG.DiceRollResults, Assembly-CSharp
+        m_TargetAssemblyTypeName: TextRPG.Dice.DiceRollResults, Assembly-CSharp
         m_MethodName: GenerateResultsText
         m_Mode: 0
         m_Arguments:
@@ -170,14 +170,14 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument:
           m_BoolArgument: 0
         m_CallState: 2
   OnRoll:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 8320277682088523794}
-        m_TargetAssemblyTypeName: TextRPG.DiceRollResults, Assembly-CSharp
+        m_TargetAssemblyTypeName: TextRPG.Dice.DiceRollResults, Assembly-CSharp
         m_MethodName: SetRolling
         m_Mode: 1
         m_Arguments:
@@ -185,14 +185,14 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument:
           m_BoolArgument: 0
         m_CallState: 2
   OnReveal:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 568464940755871395}
-        m_TargetAssemblyTypeName: TextRPG.DiceProbabilities, Assembly-CSharp
+        m_TargetAssemblyTypeName: TextRPG.Dice.DiceProbabilities, Assembly-CSharp
         m_MethodName: Reveal
         m_Mode: 0
         m_Arguments:
@@ -200,11 +200,11 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 8320277682088523794}
-        m_TargetAssemblyTypeName: TextRPG.DiceRollResults, Assembly-CSharp
+        m_TargetAssemblyTypeName: TextRPG.Dice.DiceRollResults, Assembly-CSharp
         m_MethodName: Reveal
         m_Mode: 0
         m_Arguments:
@@ -212,7 +212,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument:
           m_BoolArgument: 0
         m_CallState: 2
   OnContinue:
@@ -227,11 +227,11 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument:
           m_BoolArgument: 1
         m_CallState: 2
       - m_Target: {fileID: 568464940755871395}
-        m_TargetAssemblyTypeName: TextRPG.DiceProbabilities, Assembly-CSharp
+        m_TargetAssemblyTypeName: TextRPG.Dice.DiceProbabilities, Assembly-CSharp
         m_MethodName: ResetText
         m_Mode: 1
         m_Arguments:
@@ -239,11 +239,11 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument:
           m_BoolArgument: 1
         m_CallState: 2
       - m_Target: {fileID: 8320277682088523794}
-        m_TargetAssemblyTypeName: TextRPG.DiceRollResults, Assembly-CSharp
+        m_TargetAssemblyTypeName: TextRPG.Dice.DiceRollResults, Assembly-CSharp
         m_MethodName: Next
         m_Mode: 1
         m_Arguments:
@@ -251,7 +251,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument:
           m_BoolArgument: 1
         m_CallState: 2
   OnSuccess:
@@ -261,7 +261,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 8320277682088523794}
-        m_TargetAssemblyTypeName: TextRPG.DiceRollResults, Assembly-CSharp
+        m_TargetAssemblyTypeName: TextRPG.Dice.DiceRollResults, Assembly-CSharp
         m_MethodName: ResetText
         m_Mode: 1
         m_Arguments:
@@ -269,7 +269,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument:
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!1 &3330800860219958568
@@ -328,8 +328,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
@@ -465,8 +465,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
@@ -495,8 +495,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_Navigation:
     m_Mode: 3
     m_WrapAround: 0
@@ -538,7 +538,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 3330800860129199258}
@@ -550,7 +550,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument:
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!1 &8767756609169018097
@@ -605,9 +605,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 8767756609169018097}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e311167068a16384a9479829f31eaf61, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Script: {fileID: 11500000, guid: 8091759765f84974cbae65536b555e30, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
   ProbabilitiesTextPrefab: {fileID: 8407713576264299688, guid: 493887b2ee6a4354ca4215c8eff6c55a, type: 3}
 --- !u!1001 &576706364171289330
 PrefabInstance:

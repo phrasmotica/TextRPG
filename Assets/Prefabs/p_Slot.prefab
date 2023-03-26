@@ -56,8 +56,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
@@ -319,9 +319,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 5128651133457034451}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0f550cf3d9afe9d47829b00784f8d2b9, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Script: {fileID: 11500000, guid: cbd7f33b58a498849acab02be71c3631, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   ItemFactory: {fileID: 0}
   SlotIndex: 0
   ItemPreview: {fileID: 5128651133141949625}
@@ -336,9 +336,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 5128651133457034451}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d46e0757dfddbca449db46f75cbd0298, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Script: {fileID: 11500000, guid: 07353319061de1544adba0de84bb1e81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   SpriteRenderer: {fileID: 5128651132148214079}
   MouseEnterSprite: {fileID: 21300000, guid: 9573131ce9ca05b4090f09d200eafd53, type: 3}
   MouseExitSprite: {fileID: 21300000, guid: eb4141b7bbc0e91449cff25f5c4954cd, type: 3}
@@ -424,8 +424,8 @@ MonoBehaviour:
   m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0.5849056, g: 0.5849056, b: 0.5849056, a: 1}
   m_RaycastTarget: 1

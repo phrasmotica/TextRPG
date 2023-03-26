@@ -1,4 +1,8 @@
 ﻿using System.Collections.Generic;
+using TextRPG.Dice;
+using TextRPG.Inventory;
+using TextRPG.TextScreen;
+using TextRPG.Zones;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -8,7 +12,7 @@ namespace TextRPG
     {
         private Dictionary<GameObject, bool> _enabledMap;
 
-        public Cursor Cursor;
+        public Inventory.Cursor Cursor;
 
         public ScrollingText TextScreen;
 
