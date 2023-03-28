@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using TextRPG.TextScreen;
 using UnityEngine;
 using UnityEngine.Events;
@@ -7,26 +8,43 @@ namespace TextRPG
 {
     public class TextManager : MonoBehaviour
     {
+        private ScrollingText _currentText;
+
         public List<string> InitialParagraphs;
 
         public GameObject TextScreenPrefab;
 
-        private ScrollingText _currentText;
-
-        public bool IsShowing { get; private set; }
-
         public UnityEvent OnShow;
 
         public UnityEvent OnHide;
+
+        public bool IsShowing { get; private set; }
 
         public void Begin()
         {
             ShowInitialTextScreen();
         }
 
-        public void ShowTextScreen(List<string> paragraphs)
+        public void ShowTextScreen(string text) => ShowTextScreen(new List<string> { text }, 0);
+
+        public void ShowTextScreen(List<string> paragraphs) => ShowTextScreen(paragraphs, 0);
+
+        public void ShowTextScreen(TextParagraphs text) => ShowTextScreen(text.Paragraphs, text.DelaySeconds);
+
+        public void ShowTextScreen(List<string> paragraphs, float delaySeconds)
+        {
+            StartCoroutine(ShowParagraphs(paragraphs, delaySeconds));
+        }
+
+        public void Skip() => _currentText.Skip();
+
+        private void ShowInitialTextScreen() => ShowTextScreen(InitialParagraphs);
+
+        private IEnumerator ShowParagraphs(List<string> paragraphs, float delaySeconds)
         {
             OnShow?.Invoke();
+
+            yield return new WaitForSeconds(delaySeconds);
 
             IsShowing = true;
 
@@ -41,9 +59,5 @@ namespace TextRPG
 
             _currentText.Begin();
         }
-
-        public void Skip() => _currentText.Skip();
-
-        private void ShowInitialTextScreen() => ShowTextScreen(InitialParagraphs);
     }
 }

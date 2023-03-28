@@ -13,6 +13,8 @@ namespace TextRPG
 
         public Image Image;
 
+        public UnityEvent OnStart;
+
         public UnityEvent OnFinish;
 
         private void Awake()
@@ -22,6 +24,8 @@ namespace TextRPG
 
         private IEnumerator Fade()
         {
+            OnStart?.Invoke();
+
             while (Image.color.a > 0)
             {
                 var fadeAmount = Image.color.a - (Time.deltaTime / Duration);

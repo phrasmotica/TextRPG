@@ -9,7 +9,7 @@ namespace TextRPG
 
         public List<string> PromptParagraphs;
 
-        private void OnMouseDown()
+        public void Prompt()
         {
             if (!TextManager.IsShowing)
             {
