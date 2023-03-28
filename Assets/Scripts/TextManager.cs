@@ -14,6 +14,8 @@ namespace TextRPG
 
         public GameObject TextScreenPrefab;
 
+        public UnityEvent<float> OnDelay;
+
         public UnityEvent OnShow;
 
         public UnityEvent OnHide;
@@ -42,9 +44,14 @@ namespace TextRPG
 
         private IEnumerator ShowParagraphs(List<string> paragraphs, float delaySeconds)
         {
-            OnShow?.Invoke();
+            if (delaySeconds > 0)
+            {
+                OnDelay?.Invoke(delaySeconds);
 
-            yield return new WaitForSeconds(delaySeconds);
+                yield return new WaitForSeconds(delaySeconds);
+            }
+
+            OnShow?.Invoke();
 
             IsShowing = true;
 
