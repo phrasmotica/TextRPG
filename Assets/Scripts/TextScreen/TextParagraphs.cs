@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace TextRPG.TextScreen
 {
@@ -9,5 +10,9 @@ namespace TextRPG.TextScreen
         public float DelaySeconds;
 
         public List<string> Paragraphs;
+
+        public UnityEvent OnFinish;
+
+        public void Finish() => OnFinish?.Invoke();
     }
 }

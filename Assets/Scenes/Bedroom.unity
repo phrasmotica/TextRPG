@@ -447,6 +447,9 @@ MonoBehaviour:
   DelaySeconds: 1
   Paragraphs:
   - Tap an image to read a headline
+  OnFinish:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &606588551
 GameObject:
   m_ObjectHideFlags: 0
@@ -524,6 +527,33 @@ MonoBehaviour:
   - Mate, did you hear??????
   - "I\u2019ve got alarms set for days"
   - '[Player name] - obviously you are joining?'
+  OnFinish:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1247070553}
+        m_TargetAssemblyTypeName: UnityEngine.SpriteRenderer, UnityEngine
+        m_MethodName: set_sprite
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 21300000, guid: d1b944eacc7a6b64aa53ebc4355d527e, type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Sprite, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 929850390}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &606588555
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -546,6 +576,18 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 606588554}
           m_ObjectArgumentAssemblyTypeName: TextRPG.TextScreen.TextParagraphs, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1984305221}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -1231,6 +1273,9 @@ MonoBehaviour:
     Government Benefits\u2019; \u2018Magic Fortitude Announces First Festival Line-Up
     in Eight Years\u2019; \u2018Pestilence Befalls Everyone\u2019"
   - "Oh my god\u2026 Can you believe it? Magic Fortitude is back!"
+  OnFinish:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!61 &1965705455
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1387,6 +1432,9 @@ MonoBehaviour:
     ridiculous CV you submitted and our overall doubts about your personality.  All
     the best with your future endeavours.  Go well,  Dr. Loughton-Spoon\u2019 "
   - Sounds like a nice guy
+  OnFinish:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &2048424838
 MonoBehaviour:
   m_ObjectHideFlags: 0
